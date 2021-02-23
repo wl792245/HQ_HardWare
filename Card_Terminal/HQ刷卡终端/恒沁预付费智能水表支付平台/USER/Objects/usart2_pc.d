@@ -1,0 +1,12 @@
+.\objects\usart2_pc.o: ..\SYSTEM\src\Usart2_PC.c
+.\objects\usart2_pc.o: ..\FWlib\inc\stm32f10x_usart.h
+.\objects\usart2_pc.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\usart2_pc.o: ..\CORE\inc\core_cm3.h
+.\objects\usart2_pc.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\usart2_pc.o: ..\SYSTEM\inc\system_stm32f10x.h
+.\objects\usart2_pc.o: ..\SYSTEM\inc\stm32f10x_conf.h
+.\objects\usart2_pc.o: ..\FWlib\inc\stm32f10x_gpio.h
+.\objects\usart2_pc.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\usart2_pc.o: ..\FWlib\inc\stm32f10x_rcc.h
+.\objects\usart2_pc.o: ..\FWlib\inc\misc.h
+.\objects\usart2_pc.o: ..\SYSTEM\inc\Usart2_PC.h

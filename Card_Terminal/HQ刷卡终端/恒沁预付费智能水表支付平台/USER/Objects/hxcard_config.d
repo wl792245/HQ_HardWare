@@ -1,0 +1,12 @@
+.\objects\hxcard_config.o: ..\HARDWARE\src\HXCard_Config.c
+.\objects\hxcard_config.o: ..\HARDWARE\inc\HXCard_Config.h
+.\objects\hxcard_config.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\hxcard_config.o: ..\CORE\inc\core_cm3.h
+.\objects\hxcard_config.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\hxcard_config.o: ..\SYSTEM\inc\system_stm32f10x.h
+.\objects\hxcard_config.o: ..\SYSTEM\inc\stm32f10x_conf.h
+.\objects\hxcard_config.o: ..\FWlib\inc\stm32f10x_gpio.h
+.\objects\hxcard_config.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\hxcard_config.o: ..\FWlib\inc\stm32f10x_rcc.h
+.\objects\hxcard_config.o: ..\FWlib\inc\misc.h
+.\objects\hxcard_config.o: ..\FWlib\inc\stm32f10x_exti.h

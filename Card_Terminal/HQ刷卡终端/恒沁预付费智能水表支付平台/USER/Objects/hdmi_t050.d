@@ -1,0 +1,17 @@
+.\objects\hdmi_t050.o: ..\HARDWARE\src\HDMI_T050.c
+.\objects\hdmi_t050.o: ..\HARDWARE\inc\HDMI_T050.h
+.\objects\hdmi_t050.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\hdmi_t050.o: ..\CORE\inc\core_cm3.h
+.\objects\hdmi_t050.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\hdmi_t050.o: ..\SYSTEM\inc\system_stm32f10x.h
+.\objects\hdmi_t050.o: ..\SYSTEM\inc\stm32f10x_conf.h
+.\objects\hdmi_t050.o: ..\FWlib\inc\stm32f10x_gpio.h
+.\objects\hdmi_t050.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\hdmi_t050.o: ..\FWlib\inc\stm32f10x_rcc.h
+.\objects\hdmi_t050.o: ..\FWlib\inc\misc.h
+.\objects\hdmi_t050.o: ..\HARDWARE\inc\AT24C02.h
+.\objects\hdmi_t050.o: ..\SYSTEM\inc\Usart3_HDMI.h
+.\objects\hdmi_t050.o: C:\Keil\ARM\ARMCC\Bin\..\include\string.h
+.\objects\hdmi_t050.o: ..\SYSTEM\inc\String_Config.h
+.\objects\hdmi_t050.o: ..\HARDWARE\inc\M6312.h
+.\objects\hdmi_t050.o: ..\SYSTEM\inc\Usart1_M6312.h

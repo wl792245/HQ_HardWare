@@ -1,0 +1,14 @@
+.\objects\utils.o: ..\Utils\src\utils.c
+.\objects\utils.o: ..\Utils\inc\utils.h
+.\objects\utils.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\utils.o: ..\CORE\inc\core_cm3.h
+.\objects\utils.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\utils.o: ..\SYSTEM\inc\system_stm32f10x.h
+.\objects\utils.o: ..\SYSTEM\inc\stm32f10x_conf.h
+.\objects\utils.o: ..\FWlib\inc\stm32f10x_gpio.h
+.\objects\utils.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\utils.o: ..\FWlib\inc\stm32f10x_rcc.h
+.\objects\utils.o: ..\FWlib\inc\misc.h
+.\objects\utils.o: C:\Keil\ARM\ARMCC\Bin\..\include\math.h
+.\objects\utils.o: C:\Keil\ARM\ARMCC\Bin\..\include\ctype.h
+.\objects\utils.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdlib.h

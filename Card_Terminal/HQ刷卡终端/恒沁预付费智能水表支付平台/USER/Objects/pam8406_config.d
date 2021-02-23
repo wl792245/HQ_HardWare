@@ -1,0 +1,12 @@
+.\objects\pam8406_config.o: ..\HARDWARE\src\PAM8406_Config.c
+.\objects\pam8406_config.o: ..\HARDWARE\inc\PAM8406_Config.h
+.\objects\pam8406_config.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\pam8406_config.o: ..\CORE\inc\core_cm3.h
+.\objects\pam8406_config.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\pam8406_config.o: ..\SYSTEM\inc\system_stm32f10x.h
+.\objects\pam8406_config.o: ..\SYSTEM\inc\stm32f10x_conf.h
+.\objects\pam8406_config.o: ..\FWlib\inc\stm32f10x_gpio.h
+.\objects\pam8406_config.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\pam8406_config.o: ..\FWlib\inc\stm32f10x_rcc.h
+.\objects\pam8406_config.o: ..\FWlib\inc\misc.h
+.\objects\pam8406_config.o: ..\SYSTEM\inc\systick.h

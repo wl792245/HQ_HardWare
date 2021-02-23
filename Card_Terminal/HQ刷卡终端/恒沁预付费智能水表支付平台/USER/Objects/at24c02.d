@@ -1,0 +1,16 @@
+.\objects\at24c02.o: ..\HARDWARE\src\AT24C02.c
+.\objects\at24c02.o: ..\HARDWARE\inc\AT24C02.h
+.\objects\at24c02.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\at24c02.o: ..\CORE\inc\core_cm3.h
+.\objects\at24c02.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\at24c02.o: ..\SYSTEM\inc\system_stm32f10x.h
+.\objects\at24c02.o: ..\SYSTEM\inc\stm32f10x_conf.h
+.\objects\at24c02.o: ..\FWlib\inc\stm32f10x_gpio.h
+.\objects\at24c02.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\at24c02.o: ..\FWlib\inc\stm32f10x_rcc.h
+.\objects\at24c02.o: ..\FWlib\inc\misc.h
+.\objects\at24c02.o: ..\SYSTEM\inc\IIC_24C02.h
+.\objects\at24c02.o: ..\SYSTEM\inc\systick.h
+.\objects\at24c02.o: ..\SYSTEM\inc\String_Config.h
+.\objects\at24c02.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\at24c02.o: C:\Keil\ARM\ARMCC\Bin\..\include\string.h

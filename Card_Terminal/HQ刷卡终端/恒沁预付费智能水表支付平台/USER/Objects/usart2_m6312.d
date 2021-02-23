@@ -1,0 +1,15 @@
+.\objects\usart2_m6312.o: ..\SYSTEM\src\Usart2_M6312.c
+.\objects\usart2_m6312.o: ..\FWlib\inc\stm32f10x_usart.h
+.\objects\usart2_m6312.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\usart2_m6312.o: ..\CORE\inc\core_cm3.h
+.\objects\usart2_m6312.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\usart2_m6312.o: ..\SYSTEM\inc\system_stm32f10x.h
+.\objects\usart2_m6312.o: ..\SYSTEM\inc\stm32f10x_conf.h
+.\objects\usart2_m6312.o: ..\FWlib\inc\stm32f10x_gpio.h
+.\objects\usart2_m6312.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\usart2_m6312.o: ..\FWlib\inc\stm32f10x_rcc.h
+.\objects\usart2_m6312.o: ..\FWlib\inc\misc.h
+.\objects\usart2_m6312.o: ..\SYSTEM\inc\Usart2_M6312.h
+.\objects\usart2_m6312.o: C:\Keil\ARM\ARMCC\Bin\..\include\string.h
+.\objects\usart2_m6312.o: ..\SYSTEM\inc\systick.h
+.\objects\usart2_m6312.o: ..\Utils\inc\String_Get.h
