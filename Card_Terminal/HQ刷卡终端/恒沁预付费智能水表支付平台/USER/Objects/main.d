@@ -9,6 +9,7 @@
 .\objects\main.o: ..\SYSTEM\inc\stm32f10x.h
 .\objects\main.o: ..\FWlib\inc\stm32f10x_rcc.h
 .\objects\main.o: ..\FWlib\inc\misc.h
+.\objects\main.o: ..\FWlib\inc\stm32f10x_tim.h
 .\objects\main.o: ..\HARDWARE\inc\M6312.h
 .\objects\main.o: ..\SYSTEM\inc\Usart1_M6312.h
 .\objects\main.o: ..\HARDWARE\inc\AT24C02.h
@@ -28,6 +29,5 @@
 .\objects\main.o: ..\HARDWARE\inc\Timer_Deal.h
 .\objects\main.o: ..\SYSTEM\inc\Timer_Heart.h
 .\objects\main.o: ..\SYSTEM\inc\systick.h
-.\objects\main.o: ..\FWlib\inc\stm32f10x_tim.h
-.\objects\main.o: C:\Keil\ARM\ARMCC\Bin\..\include\string.h
 .\objects\main.o: ..\HARDWARE\inc\CardInfoDeal.h
+.\objects\main.o: C:\Keil\ARM\ARMCC\Bin\..\include\string.h

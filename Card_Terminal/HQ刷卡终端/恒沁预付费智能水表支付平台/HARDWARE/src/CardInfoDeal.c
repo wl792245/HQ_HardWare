@@ -30,7 +30,6 @@ char SendServerBuf[RCVLEN];      //发送到服务器中
 char RecieveServerBuf[RCVLEN];   //接收服务器返回的结果
 
 
-
 //char ServerRecHead[18];                 //服务器取头
 //char ServerRecStr[200];                 //服务器内容
 HXCard4428_Info HXCard4428_RecvInfo;    //华旭4428卡接收消息结构体
@@ -239,14 +238,16 @@ HXCard4428_Info HXCard4428_RecvInfo;    //华旭4428卡接收消息结构体
 *******************************************************************************/
 void SCCard_Deal(void)
 {
-	u8 i;
-	u8 PC_ReturnValue, PC_SpitValue, M6312_ReturnValue;
+  u8 PC_ReturnValue, PC_SpitValue, M6312_ReturnValue;
   SCCard_5557PC SCCard_PCInfo;
 	SCCard_Server SCCard_ServerInfo;
 	
 	PC_ReturnValue = 0;
 	PC_SpitValue = 0;
 	M6312_ReturnValue = 0;
+	
+	PC_RestartFlag = 0;
+	M6312_RestartFlag = 0;
 	//向PC发送读卡信息
 	PC_ReturnValue = PC_ReadData(RecievePCBuf, 3, RCVLEN);
 	//电脑通讯成功
@@ -263,19 +264,30 @@ void SCCard_Deal(void)
 				{
 					SCCard_ServerDataSpit(&SCCard_ServerInfo, SCCard_PCInfo, SendServerBuf, RecievePCBuf,RecieveServerBuf, SendPCBuf);
 				}
-			}		
+				else
+				{
+					M6312_RestartFlag = 1;  //M6312重启
+				}
+			}
+			else if (PC_SpitValue == 0)
+			{
+					HDMIShowInfo("未知卡,请正确插卡！");
+				  delay_ms(10);
+		     	PC_StartPam("未知卡,请正确插卡！");
+			}
+			else if(PC_SpitValue == 2)
+			{
+				HDMIShowMenuInfo(&DeviceInfo);        //主界面显示
+				return ;
+			}				
 	}
 	//电脑通讯失败
 	else
 	{
-		//			PC_SendData("CardOff%$$");
+		  PC_StartPam("请取卡,3分钟后再插卡");
+			delay_ms(300);
 			HDMIShowInfo("请取卡,3分钟后再插卡");
-			PC_Close();
-			for(i=0;i<210;i++)
-			{
-				delay_ms(1024);
-			}
-			PC_Open();
+		  PC_RestartFlag = 1;   //电脑重启
 	}
 }
 /******************** (C) COPYRIGHT 2021 江苏恒沁科技有限公司 ********************/

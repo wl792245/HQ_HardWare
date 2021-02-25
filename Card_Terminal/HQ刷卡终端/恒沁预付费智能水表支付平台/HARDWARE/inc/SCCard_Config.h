@@ -22,8 +22,8 @@ extern volatile uint32_t   SCCardIsInter;
 
 typedef struct SCCARD5557PC
 {
-	char PCRecHead[2];               //PC返回DLL头
-  char PCRecStr[200];              //PC返回DLL内容
+	char PCRecHead[2];                 //PC返回DLL头
+  char PCRecStr[200];                //PC返回DLL内容
 	char iCardTypeSC[4];               //三川卡类型
 	char iManageCodeSC[9];             //三川河间维护码
 	char iKeySC[15];                   //三川河间密钥

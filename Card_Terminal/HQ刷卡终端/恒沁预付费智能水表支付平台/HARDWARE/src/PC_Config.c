@@ -79,7 +79,7 @@ void USART_PC_SendData(char * buf,uint32_t len)
 	String_Clear((char *)usart2_rcv_buf,strlen((const char *)usart2_rcv_buf));
 	usart2_rcv_len=0;
 	USART_PC_Write(buf,len);	
-	delay_ms(20);	
+	//delay_ms(20);	
 }
 /*******************************************************************************
 * 函 数 名         : PC_ReadCard
@@ -97,21 +97,30 @@ void PC_ReadCard(void)
 * 输    入         : pdest:接收字符串  times：次数 len:接收长度
 * 输    出         : 1:成功接收到数据 0：接收数据失败
 *******************************************************************************/
-u8 PC_ReadData(char * pdest,  int times,int len)
+u8 PC_ReadData(char * pdest,  const char times,int len)
 {
 		u8 Sendtimes = 0;
-	  u8 PC_ReturnValue = 0; 
-	  if(Sendtimes < times) //没返回就连续发送3次
+	  u8 Rec_Value = 0;
+	  while(Sendtimes < times) //没返回就连续发送3次
 		{
-			PC_ReadCard();         //上发读卡指令到电脑
 			Sendtimes++;  
-			PC_ReturnValue = PC_ReceiveData(pdest, len);
-			if (1 == PC_ReturnValue)
+			PC_ReadCard();         //上发读卡指令到电脑
+			Rec_Value = PC_ReceiveData(pdest, len);
+			if (1 == Rec_Value)
 			{
-				return 1;
+				break;
 			}
+			delay_ms(900);
+			delay_ms(900);
 		}
-		return 0;
+		if (Sendtimes < times)
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
 }
 /*******************************************************************************
 * 函 数 名         : PC_WriteCard
@@ -148,11 +157,11 @@ void PC_WriteCard(const char *psrc, CardType_Info CardTypeInfo)
 * 输    入         : pdest:接收字符串；psrc:写入字符串  times：次数 len:接收长度 CardTypeInfo:卡类型
 * 输    出         : 1:成功接收到数据 0：接收数据失败
 *******************************************************************************/
-u8 PC_WirteData(char * pdest, const char *psrc, int times,int len, CardType_Info CardTypeInfo)
+u8 PC_WirteData(char * pdest, const char *psrc, const char times,int len, CardType_Info CardTypeInfo)
 {
 	u8 Sendtimes = 0;
 	u8 PC_ReturnValue = 0; 
-	if (Sendtimes < times)
+	while (Sendtimes < times)
 	{
 		//向电脑发送写卡命令
 		PC_WriteCard(psrc, CardTypeInfo);
@@ -160,14 +169,20 @@ u8 PC_WirteData(char * pdest, const char *psrc, int times,int len, CardType_Info
 		PC_ReturnValue = PC_ReceiveData(pdest, len);
 		if (PC_ReturnValue == 1)
 		{
-			return 1;
+			break;
 		}
+		delay_ms(900);
+		delay_ms(900);
+	}
+	if (Sendtimes < times)
+	{
+		return 1;
 	}
 	else
 	{
-		
+		return 0;
 	}
-	return 0;
+	
 }
 /*******************************************************************************
 * 函 数 名         : PC_ShutDown
@@ -199,31 +214,25 @@ void PC_SendData(char * data)
 u8 PC_ReceiveData(char * pdest, int len)
 {
 	u8 i;
-	for (i=0; i<20; i++)  //等待返回数据
+	String_Clear(pdest, len);
+	for (i=0; i<10; i++)  //等待返回数据
 	{
-		if (usart2_rcv_len > 0) 
+		delay_ms(600);
+		if ((usart2_rcv_len > 0) || (USB_USART_RX_STA > 0)) 
 		{
-			delay_ms(341);
 			if (NULL != strstr((const char *)usart2_rcv_buf, (const char *)"%$$"))
 			{
-				String_Clear(pdest, len);
 				PC_Usart_GetRcvData(pdest, usart2_rcv_len);
 				break;
-			}				
-		}
-		else if (USB_USART_RX_STA > 0) 
-		{
-			delay_ms(341);
+			}
 			if (NULL != strstr((const char *)USB_USART_RX_BUF, (const char *)"%$$"))
 			{
-				String_Clear(pdest, len);
 				PC_USB_GetRcvData(pdest, USB_USART_RX_STA);
 				break;
-			}				
+			}		
 		}
-		delay_ms(600);
 	}
-	if (i < 20)
+	if (i < 10)
 	{
 		return 1;
 	}
@@ -306,10 +315,7 @@ void PC_Start(void)
 	
 	HDMIShowInfo("微电脑连接中，请稍等…");
 	//等电脑启动完，可以换成接收启动成功之后发送字符来判断
-	for(i=0;i<31;i++)
-	{
-			delay_ms(941);
-	}
+	delay_ms(941);
 	while (Sendtimes < 3)
 	{
 		delay_ms(100);
@@ -338,17 +344,12 @@ void PC_Start(void)
 	{
 		PC_Connecting = 0;
 		PC_RestartFlag = 0;
-		HDMIShowInfo("设备启动成功");
+		HDMIShowInfo("电脑连接成功");
 	}
 	else
 	{
 		PC_Connecting = 1;
-		HDMIShowInfo("系统重启中…");
-		PC_ShutDown();
-		for(i=0;i<31;i++)
-		{
-			delay_ms(941);
-		}
+		HDMIShowInfo("电脑重启中…");
 		PC_RestartFlag = 1;  //电脑重启标志位
 	}
 }

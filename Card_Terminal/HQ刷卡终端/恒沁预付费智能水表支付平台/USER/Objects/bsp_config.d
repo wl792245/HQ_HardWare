@@ -9,6 +9,7 @@
 .\objects\bsp_config.o: ..\SYSTEM\inc\stm32f10x.h
 .\objects\bsp_config.o: ..\FWlib\inc\stm32f10x_rcc.h
 .\objects\bsp_config.o: ..\FWlib\inc\misc.h
+.\objects\bsp_config.o: ..\FWlib\inc\stm32f10x_tim.h
 .\objects\bsp_config.o: ..\HARDWARE\inc\M6312.h
 .\objects\bsp_config.o: ..\SYSTEM\inc\Usart1_M6312.h
 .\objects\bsp_config.o: ..\HARDWARE\inc\AT24C02.h
@@ -28,3 +29,4 @@
 .\objects\bsp_config.o: ..\HARDWARE\inc\Timer_Deal.h
 .\objects\bsp_config.o: ..\SYSTEM\inc\Timer_Heart.h
 .\objects\bsp_config.o: ..\SYSTEM\inc\systick.h
+.\objects\bsp_config.o: ..\HARDWARE\inc\CardInfoDeal.h

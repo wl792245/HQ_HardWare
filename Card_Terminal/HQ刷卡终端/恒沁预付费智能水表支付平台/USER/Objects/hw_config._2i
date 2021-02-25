@@ -1,0 +1,5 @@
+--c99 --gnu -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ..\INTERFACE\inc -I ..\CORE\inc -I ..\FWlib\inc -I ..\SYSTEM\inc -I ..\Utils\inc -I ..\HARDWARE\inc -I ..\USB\CONFIG -I ..\USB\STM32_USB-FS-Device_Driver\inc
+-IC:\Keil\Arm\Packs\Keil\STM32F1xx_DFP\1.1.0\Device\Include
+-IC:\Keil\ARM\CMSIS\Include
+-D__UVISION_VERSION="532" -DSTM32F10X_MD -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER
+-o .\objects\hw_config.o --omf_browse .\objects\hw_config.crf --depend .\objects\hw_config.d --feedback ".\Objects\HQ‘§∏∂∑—À¢ø®÷’∂À.fed" "..\USB\CONFIG\hw_config.c"

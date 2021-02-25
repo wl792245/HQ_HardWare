@@ -60,6 +60,6 @@ void HDMIShowChangeSuccess(void);
 void HDMIShowSignal(unsigned char SignalValue);
 void HDMIShowServerInfo(pDeviceInit deviceinfo);
 void HardWareErr(void);
-void HDMIShowMenuInfo(DeviceInit Menu);
+void HDMIShowMenuInfo(const pDeviceInit Menu);
 #endif
 /******************** (C) COPYRIGHT 2021 江苏恒沁科技有限公司 ********************/

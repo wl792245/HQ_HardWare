@@ -19,7 +19,7 @@
 #define  PC_POWER_L        GPIO_ResetBits(PC_POWER_PORT,PC_POWER_PIN)
 
 extern volatile unsigned char PC_Connecting;
-
+extern volatile unsigned char PC_RestartFlag;
 
 
 void PC_Init(u32 Bound, u16 m_irq, u16 s_irq);
@@ -34,9 +34,8 @@ void PC_SendData(char * data);
 u8 PC_ReceiveData(char * pdest, int len);
 void PC_Usart_GetRcvData(char * buf, int rcv_len);
 void PC_USB_GetRcvData(char * buf, int rcv_len);
-u8 PC_ReadData(char * pdest,  int times,int len);
-u8 PC_WirteData(char * pdest, const char *psrc, int times,int len, CardType_Info CardTypeInfo);
-
+u8 PC_ReadData(char * pdest,  const char times,int len);
+u8 PC_WirteData(char * pdest, const char *psrc, const char times,int len, CardType_Info CardTypeInfo);
 void USART_PC_SendData(char * buf,uint32_t len);
 
 #endif

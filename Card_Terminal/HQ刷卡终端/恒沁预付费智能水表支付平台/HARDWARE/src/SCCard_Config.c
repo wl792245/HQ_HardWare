@@ -61,13 +61,13 @@ u8 SCCard_PCDataSpit(PSCCard_5557PC SCCardPC,char *pdst_ServerSend,char *psrc_PC
 		Interger_Clear(num,20);
 		String_Clear(SCCardPC->PCRecHead, 2);
 		String_Clear(SCCardPC->PCRecStr,200);
-		//Char_Find(num,psrc_PCRecv, '%');   
+		Char_Find(num,psrc_PCRecv, '%');   
 		String_Find(SCCardPC->PCRecHead, psrc_PCRecv, 0, num[0]);                  //取头
-		String_Find(SCCardPC->PCRecStr, psrc_PCRecv, num[0]+1, num[1]);            // 卡内容
 	  if (strcmp(SCCardPC->PCRecHead, "1") == 0)                                  //dll返回读卡值
 		{
+			String_Find(SCCardPC->PCRecStr, psrc_PCRecv, num[0]+1, num[1]);            // 卡内容
 			Interger_Clear(num,20);
-			//Char_Find(num,SCCardPC->PCRecStr, '|');
+			Char_Find(num,SCCardPC->PCRecStr, '|');
 			String_Find(SCCardPC->iCardTypeSC, SCCardPC->PCRecStr, 0, num[0]);                // 三川5557卡类型
 			String_Find(SCCardPC->iManageCodeSC, SCCardPC->PCRecStr, num[0]+1, num[1]);       // 三川5557卡系统维护码
 			String_Find(SCCardPC->iKeySC, SCCardPC->PCRecStr, num[1]+1, num[2]);              // 三川5557卡密钥
@@ -81,11 +81,11 @@ u8 SCCard_PCDataSpit(PSCCard_5557PC SCCardPC,char *pdst_ServerSend,char *psrc_PC
 				//新购水未圈存，请先刷表
 			if ((strcmp(SCCardPC->iCardTypeSC, "288") == 0)||(strcmp(SCCardPC->iCardTypeSC, "298") == 0))
 			{
-//				HDMIShowInfo("请先刷表");
-//				delay_ms(10);
-//				PC_StartPam("请先刷表");
-//				delay_ms(100);
-				
+				HDMIShowInfo("请先刷表");
+				delay_ms(10);
+				PC_StartPam("请先刷表");
+				delay_ms(100);
+				return 2;
 			}
 			else
 			{
@@ -104,12 +104,9 @@ u8 SCCard_PCDataSpit(PSCCard_5557PC SCCardPC,char *pdst_ServerSend,char *psrc_PC
 		}
 		else
 		{
-//					HDMIShowInfo("未知卡,请正确插卡！");
-//					delay_ms(10);
-//					PC_StartPam("未知卡,请正确插卡！");
+			    return 0;
 		}
-		return 0;
-
+		
 }
 /*******************************************************************************
 * 函 数 名         : SCCard_ServerDataSpit
@@ -127,7 +124,7 @@ void SCCard_ServerDataSpit(PSCCard_Server SCCardServer,const SCCard_5557PC SCCar
 	  UserInfoShow  UserInfo;
 	  PC_ReturnValue = 0;
 	  M6312_ReturnValue = 0;
-	  //Get_Head(SCCardServer->ServerRecHead,psrc_Server, '%', num, 20);
+	  Get_Head(SCCardServer->ServerRecHead,psrc_Server, '%', num, 20);
 	  //头判断
     if(strcmp(SCCardServer->ServerRecHead,"SC5557USERP")==0)	                //三川5557新增订单处理
 		{
@@ -165,12 +162,12 @@ void SCCard_ServerDataSpit(PSCCard_Server SCCardServer,const SCCard_5557PC SCCar
 			//写卡成功，接收到PC返回的数据
 			if (PC_ReturnValue == 1)
 			{
-				//Get_Head(PC_ReturnHead ,pdst_PCRec, '%', num, 20);
+				Get_Head(PC_ReturnHead ,pdst_PCRec, '%', num, 20);
 				//写卡成功
 				if (strcmp(PC_ReturnHead, "1") == 0)
 				{
 					SCCard_ServerDataCombine(pdst_ServerSend, *SCCardServer, PC_ReturnHead,1);
-					M6312_ReturnValue = M6312_UploadData(psrc_Server, pdst_ServerSend, "%$$", 3, 250);
+					M6312_ReturnValue = M6312_UploadData(psrc_Server, pdst_ServerSend, "OK", 3, 250);
 					if (M6312_ReturnValue == 1)
 					{
 						if ((strcmp(psrc_Server, "updateorderstateOK2")==0) || (strstr(psrc_Server, "pdateorderstateOK2")!= NULL))

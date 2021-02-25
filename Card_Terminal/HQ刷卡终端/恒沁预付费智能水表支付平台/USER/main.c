@@ -9,7 +9,7 @@
 #include "BSP_Config.h"
 #include "stm32f10x_tim.h"
 #include "string.h"
-#include "CardInfoDeal.h"
+
 /*******************************************************************************
 * 函 数 名         : main
 * 函数功能		     : 主函数，程序入口
@@ -18,20 +18,11 @@
 *******************************************************************************/
 int main(void)
 {
-
+  u8 i;
 	BSP_Init();
 	while(1)
 	{
-		//华旭卡处理
-		if(HXCardIsInter == 1)
-		{
-			TIM_Cmd(TIM3,DISABLE); //使能或者失能TIMx外设	
-			sec = 0;
-			HXCardIsInter = 0;
-			HDMIShowWait();
-			
-		}
-		//三川卡处理
+    //Card_Deal();
 		if(SCCardIsInter == 1)
 		{
 			TIM_Cmd(TIM3,DISABLE); //使能或者失能TIMx外设
@@ -39,14 +30,39 @@ int main(void)
 			SCCardIsInter = 0;
 			HDMIShowWait();
 			SCCard_Deal();
+			TIM_Cmd(TIM3,ENABLE); //使能或者失能TIMx外设
 		}
-		//新天卡处理
-		//海通卡处理
-		//扬州卡处理
 		//定时器处理
 		if(TimeIsInter == 1)
 		{
 			
+		}
+		//电脑重启处理
+		if (PC_RestartFlag == 1)
+		{
+			TIM_Cmd(TIM3,DISABLE); //使能或者失能TIMx外设
+			sec = 0;
+			PC_RestartFlag = 0;
+			PC_Close();
+			delay_ms(941);
+      PC_Open();                         //微电脑开机
+			for(i=0;i<180;i++)
+			{
+				delay_ms(941);
+			}
+			PC_Start();                        //电脑启动
+			HDMIShowMenuInfo(&DeviceInfo);        //主界面显示
+			TIM_Cmd(TIM3,ENABLE); //使能或者失能TIMx外设
+		}
+		//M6312重启
+		if (M6312_RestartFlag == 1)
+		{
+			TIM_Cmd(TIM3,DISABLE); //使能或者失能TIMx外设
+			sec = 0;
+			M6312_RestartFlag = 0;
+			M6312_Connect(DeviceInfo.ServerInfo.ServerIP, DeviceInfo.ServerInfo.ServerPort, "网络连接中...");  //M6312连接服务器,信号强度检测，时间读取
+			HDMIShowMenuInfo(&DeviceInfo);        //主界面显示
+			TIM_Cmd(TIM3,ENABLE); //使能或者失能TIMx外设
 		}
 	}
 }

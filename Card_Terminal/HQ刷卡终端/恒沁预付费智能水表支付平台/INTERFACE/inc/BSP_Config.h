@@ -10,6 +10,7 @@
 #define __BSP_CONFIG_H
 
 #include "stm32f10x.h"
+#include "stm32f10x_tim.h"
 
 #include "M6312.h"
 #include "AT24C02.h"
@@ -22,8 +23,10 @@
 #include "Timer_Deal.h"
 #include "sys.h"
 #include "systick.h"
+#include "CardInfoDeal.h"
 
 void BSP_Init(void);
+void Card_Deal(void);
 #endif
 
 /******************** (C) COPYRIGHT 2021 江苏恒沁科技有限公司 ********************/

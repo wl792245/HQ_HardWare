@@ -170,7 +170,6 @@ void TIM3_IRQHandler()
 	{
 		TIM_ClearITPendingBit(TIM3, TIM_IT_Update  );	//清除中断标志
 	}
-	//IWDG_Feed();
 	sec++;
 	if(sec >= 600)  //10分钟握手一次
 	{

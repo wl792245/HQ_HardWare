@@ -11,6 +11,7 @@
 #include "stm32f10x.h"
 #include "systick.h"
 #include "string.h"
+#include "PC_Config.h"
 #include "String_Config.h"
 #include "utils.h"
 //#include "XFS.h"
@@ -36,7 +37,7 @@ static void M6312POWER_Init(void)
 	GPIO_InitStructure.GPIO_Mode=GPIO_Mode_Out_PP;	 //推挽输出  
 	GPIO_InitStructure.GPIO_Speed=GPIO_Speed_50MHz;	  //最高输出率50MHz
 	GPIO_Init(M6312_POWER_PORT,&GPIO_InitStructure); //根据gpio_init结构中的指定参数初始化gpiox外围。
-
+  M6312_POWER_L;		//开GPRS模块电源
 }
 /*******************************************************************************
 * 函 数 名         : M6312_Init
@@ -222,8 +223,9 @@ void M6312_SendData(char * buf,uint32_t len)
 u8 M6312_UploadData(char * pdest,char *psrc, char *txt, int times,int len)
 {
 		u8 Sendtimes = 0;
+	  u8 netisbreak = 0;
 	  u8 i;
-	  if(Sendtimes < times) //没返回就连续发送3次
+	  while(Sendtimes < times) //没返回就连续发送3次
 		{
 			M6312_SendData(psrc, strlen(psrc)); //上传数据到服务器
 			Sendtimes++;  
@@ -234,24 +236,35 @@ u8 M6312_UploadData(char * pdest,char *psrc, char *txt, int times,int len)
 					delay_ms(341);
 					if (NULL != strstr((const char *)usart1_rcv_buf, (const char *)txt))
 					{
-						String_Clear(pdest, len);
-						M6312_USART_GetRcvData(pdest, usart1_rcv_len);
-						return 1;
+						break;
 					}
 				}
 				delay_ms(600);
 			}
+			if (i < 20)
+			{
+				netisbreak = 1;
+				break;
+			}
+			
+		}
+		if (netisbreak == 1)
+		{
+				String_Clear(pdest, len);
+				M6312_USART_GetRcvData(pdest, usart1_rcv_len);
+				return 1;
 		}
 		else
 		{
 			//通讯失败
-//				PC_SendData("CardOff%$$");
-//				HDMIShowInfo("网络无响应");
-//				delay_ms(10);
-//				PC_StartPam("网络无响应");
-//				delay_ms(100);
+			PC_SendData("CardOff%$$");
+			HDMIShowInfo("网络无响应");
+			delay_ms(10);
+			PC_StartPam("网络无响应");
+			delay_ms(100);
+			return 0;
 		}
-		return 0;
+		
 }
 /*******************************************************************************
 * 函 数 名         : M6312_USART_GetRcvData

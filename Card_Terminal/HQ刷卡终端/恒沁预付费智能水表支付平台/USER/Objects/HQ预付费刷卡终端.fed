@@ -1,0 +1,258 @@
+;#<FEEDBACK># ARM Linker, 5060960: Last Updated: Thu Feb 25 11:28:30 2021
+;VERSION 0.2
+;FILE at24c02.o
+;FILE bsp_config.o
+;FILE cardinfodeal.o
+;FILE core_cm3.o
+__REV16 <= USED 0
+__REVSH <= USED 0
+__get_MSP <= USED 0
+__get_PSP <= USED 0
+__set_MSP <= USED 0
+__set_PSP <= USED 0
+;FILE hdmi_t050.o
+HDMISendNetInit <= USED 0
+HDMIShowChangeSuccess <= USED 0
+HDMIShowServerInfo <= USED 0
+HDMI_Close_PC <= USED 0
+HardWareErr <= USED 0
+NetSignalDisplay <= USED 0
+;FILE hw_config.o
+USB_GetRcvData <= USED 0
+USB_GetRcvNum <= USED 0
+;FILE hxcard_config.o
+;FILE iic_24c02.o
+;FILE m6312.o
+;FILE main.o
+;FILE misc.o
+NVIC_SetVectorTable <= USED 0
+NVIC_SystemLPConfig <= USED 0
+;FILE pam8406_config.o
+;FILE pc_config.o
+;FILE sccard_config.o
+;FILE startup_stm32f10x_md.o
+;FILE stm32f10x_crc.o
+CRC_CalcBlockCRC <= USED 0
+CRC_CalcCRC <= USED 0
+CRC_GetCRC <= USED 0
+CRC_GetIDRegister <= USED 0
+CRC_ResetDR <= USED 0
+CRC_SetIDRegister <= USED 0
+;FILE stm32f10x_exti.o
+EXTI_ClearFlag <= USED 0
+EXTI_DeInit <= USED 0
+EXTI_GenerateSWInterrupt <= USED 0
+EXTI_GetFlagStatus <= USED 0
+EXTI_StructInit <= USED 0
+;FILE stm32f10x_gpio.o
+GPIO_AFIODeInit <= USED 0
+GPIO_DeInit <= USED 0
+GPIO_ETH_MediaInterfaceConfig <= USED 0
+GPIO_EventOutputCmd <= USED 0
+GPIO_EventOutputConfig <= USED 0
+GPIO_PinLockConfig <= USED 0
+GPIO_ReadInputData <= USED 0
+GPIO_ReadOutputData <= USED 0
+GPIO_ReadOutputDataBit <= USED 0
+GPIO_StructInit <= USED 0
+GPIO_Write <= USED 0
+GPIO_WriteBit <= USED 0
+;FILE stm32f10x_it.o
+;FILE stm32f10x_rcc.o
+RCC_ADCCLKConfig <= USED 0
+RCC_AHBPeriphClockCmd <= USED 0
+RCC_AdjustHSICalibrationValue <= USED 0
+RCC_BackupResetCmd <= USED 0
+RCC_ClearFlag <= USED 0
+RCC_ClearITPendingBit <= USED 0
+RCC_ClockSecuritySystemCmd <= USED 0
+RCC_GetITStatus <= USED 0
+RCC_HSICmd <= USED 0
+RCC_ITConfig <= USED 0
+RCC_LSEConfig <= USED 0
+RCC_LSICmd <= USED 0
+RCC_MCOConfig <= USED 0
+RCC_RTCCLKCmd <= USED 0
+RCC_RTCCLKConfig <= USED 0
+;FILE stm32f10x_tim.o
+TIM_ARRPreloadConfig <= USED 0
+TIM_BDTRConfig <= USED 0
+TIM_BDTRStructInit <= USED 0
+TIM_CCPreloadControl <= USED 0
+TIM_CCxCmd <= USED 0
+TIM_CCxNCmd <= USED 0
+TIM_ClearFlag <= USED 0
+TIM_ClearOC1Ref <= USED 0
+TIM_ClearOC2Ref <= USED 0
+TIM_ClearOC3Ref <= USED 0
+TIM_ClearOC4Ref <= USED 0
+TIM_CounterModeConfig <= USED 0
+TIM_CtrlPWMOutputs <= USED 0
+TIM_DMACmd <= USED 0
+TIM_DMAConfig <= USED 0
+TIM_DeInit <= USED 0
+TIM_ETRClockMode1Config <= USED 0
+TIM_ETRClockMode2Config <= USED 0
+TIM_ETRConfig <= USED 0
+TIM_EncoderInterfaceConfig <= USED 0
+TIM_ForcedOC1Config <= USED 0
+TIM_ForcedOC2Config <= USED 0
+TIM_ForcedOC3Config <= USED 0
+TIM_ForcedOC4Config <= USED 0
+TIM_GenerateEvent <= USED 0
+TIM_GetCapture1 <= USED 0
+TIM_GetCapture2 <= USED 0
+TIM_GetCapture3 <= USED 0
+TIM_GetCapture4 <= USED 0
+TIM_GetCounter <= USED 0
+TIM_GetFlagStatus <= USED 0
+TIM_GetPrescaler <= USED 0
+TIM_ICInit <= USED 0
+TIM_ICStructInit <= USED 0
+TIM_ITRxExternalClockConfig <= USED 0
+TIM_InternalClockConfig <= USED 0
+TIM_OC1FastConfig <= USED 0
+TIM_OC1Init <= USED 0
+TIM_OC1NPolarityConfig <= USED 0
+TIM_OC1PolarityConfig <= USED 0
+TIM_OC1PreloadConfig <= USED 0
+TIM_OC2FastConfig <= USED 0
+TIM_OC2Init <= USED 0
+TIM_OC2NPolarityConfig <= USED 0
+TIM_OC2PolarityConfig <= USED 0
+TIM_OC2PreloadConfig <= USED 0
+TIM_OC3FastConfig <= USED 0
+TIM_OC3Init <= USED 0
+TIM_OC3NPolarityConfig <= USED 0
+TIM_OC3PolarityConfig <= USED 0
+TIM_OC3PreloadConfig <= USED 0
+TIM_OC4FastConfig <= USED 0
+TIM_OC4Init <= USED 0
+TIM_OC4PolarityConfig <= USED 0
+TIM_OC4PreloadConfig <= USED 0
+TIM_OCStructInit <= USED 0
+TIM_PWMIConfig <= USED 0
+TIM_PrescalerConfig <= USED 0
+TIM_SelectCCDMA <= USED 0
+TIM_SelectCOM <= USED 0
+TIM_SelectHallSensor <= USED 0
+TIM_SelectInputTrigger <= USED 0
+TIM_SelectMasterSlaveMode <= USED 0
+TIM_SelectOCxM <= USED 0
+TIM_SelectOnePulseMode <= USED 0
+TIM_SelectOutputTrigger <= USED 0
+TIM_SelectSlaveMode <= USED 0
+TIM_SetAutoreload <= USED 0
+TIM_SetClockDivision <= USED 0
+TIM_SetCompare1 <= USED 0
+TIM_SetCompare2 <= USED 0
+TIM_SetCompare3 <= USED 0
+TIM_SetCompare4 <= USED 0
+TIM_SetCounter <= USED 0
+TIM_SetIC1Prescaler <= USED 0
+TIM_SetIC2Prescaler <= USED 0
+TIM_SetIC3Prescaler <= USED 0
+TIM_SetIC4Prescaler <= USED 0
+TIM_TIxExternalClockConfig <= USED 0
+TIM_TimeBaseStructInit <= USED 0
+TIM_UpdateDisableConfig <= USED 0
+TIM_UpdateRequestConfig <= USED 0
+;FILE stm32f10x_usart.o
+USART_ClearITPendingBit <= USED 0
+USART_ClockInit <= USED 0
+USART_ClockStructInit <= USED 0
+USART_DMACmd <= USED 0
+USART_GetITStatus <= USED 0
+USART_HalfDuplexCmd <= USED 0
+USART_IrDACmd <= USED 0
+USART_IrDAConfig <= USED 0
+USART_LINBreakDetectLengthConfig <= USED 0
+USART_LINCmd <= USED 0
+USART_OneBitMethodCmd <= USED 0
+USART_OverSampling8Cmd <= USED 0
+USART_ReceiveData <= USED 0
+USART_ReceiverWakeUpCmd <= USED 0
+USART_SendBreak <= USED 0
+USART_SetAddress <= USED 0
+USART_SetGuardTime <= USED 0
+USART_SetPrescaler <= USED 0
+USART_SmartCardCmd <= USED 0
+USART_SmartCardNACKCmd <= USED 0
+USART_StructInit <= USED 0
+USART_WakeUpConfig <= USED 0
+;FILE string_config.o
+Char_Num <= USED 0
+;FILE sys.o
+INTX_ENABLE <= USED 0
+;FILE system_stm32f10x.o
+SystemCoreClockUpdate <= USED 0
+;FILE systick.o
+CPU_Reset <= USED 0
+;FILE timer_deal.o
+;FILE timer_heart.o
+;FILE usart1_m6312.o
+_sys_exit <= USED 0
+fputc <= USED 0
+;FILE usart2_pc.o
+;FILE usart3_hdmi.o
+;FILE usb_config.o
+;FILE usb_core.o
+;FILE usb_endp.o
+;FILE usb_init.o
+;FILE usb_int.o
+CTR_HP <= USED 0
+;FILE usb_istr.o
+;FILE usb_mem.o
+;FILE usb_prop.o
+;FILE usb_pwr.o
+PowerOff <= USED 0
+;FILE usb_regs.o
+ClearEPDoubleBuff <= USED 0
+ClearEP_CTR_RX <= USED 0
+ClearEP_CTR_TX <= USED 0
+ClearEP_KIND <= USED 0
+FreeUserBuffer <= USED 0
+GetBTABLE <= USED 0
+GetCNTR <= USED 0
+GetDADDR <= USED 0
+GetENDPOINT <= USED 0
+GetEPAddress <= USED 0
+GetEPDblBuf0Addr <= USED 0
+GetEPDblBuf0Count <= USED 0
+GetEPDblBuf1Addr <= USED 0
+GetEPDblBuf1Count <= USED 0
+GetEPDblBufDir <= USED 0
+GetEPRxStatus <= USED 0
+GetEPTxCount <= USED 0
+GetEPTxStatus <= USED 0
+GetEPType <= USED 0
+GetFNR <= USED 0
+GetISTR <= USED 0
+GetRxStallStatus <= USED 0
+GetTxStallStatus <= USED 0
+SetCNTR <= USED 0
+SetDADDR <= USED 0
+SetDouBleBuffEPStall <= USED 0
+SetENDPOINT <= USED 0
+SetEPAddress <= USED 0
+SetEPCountRxReg <= USED 0
+SetEPDblBuf0Addr <= USED 0
+SetEPDblBuf0Count <= USED 0
+SetEPDblBuf1Addr <= USED 0
+SetEPDblBuf1Count <= USED 0
+SetEPDblBuffAddr <= USED 0
+SetEPDblBuffCount <= USED 0
+SetEPDoubleBuff <= USED 0
+SetEP_KIND <= USED 0
+SetISTR <= USED 0
+Set_Status_Out <= USED 0
+ToWord <= USED 0
+ToggleDTOG_RX <= USED 0
+ToggleDTOG_TX <= USED 0
+;FILE usb_sil.o
+USB_SIL_Write <= USED 0
+;FILE utils.o
+Byte_Split <= USED 0
+HexToChar <= USED 0
+StrToHex <= USED 0
+StringToInt <= USED 0

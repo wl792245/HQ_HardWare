@@ -38,7 +38,7 @@ void USB_PC_SendData(char * buf)
 	String_Clear((char *)USB_USART_RX_BUF,strlen((const char *)USB_USART_RX_BUF));
 	USB_USART_RX_STA=0;
 	USB_Write(buf);	
-	delay_ms(20);	
+	//delay_ms(20);	
 }
 
 

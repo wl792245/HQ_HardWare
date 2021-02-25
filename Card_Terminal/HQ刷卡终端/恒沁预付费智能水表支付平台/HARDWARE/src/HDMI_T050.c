@@ -269,23 +269,23 @@ void HDMIShowServerInfo(pDeviceInit deviceinfo)
 * 输    入         : deviceinfo：取时间和二维码信息
 * 输    出         : 无
 *******************************************************************************/
-void HDMIShowMenuInfo(DeviceInit Menu)
+void HDMIShowMenuInfo(const pDeviceInit Menu)
 {
  	char sysMsg[50];
   
 	HDMI_CMD_Send(PAGE1);
 	HDMIShowSignal(M6312_Signal);
 	HDMI_ShowInfo(sysMsg,"t0.txt=\"", "中国移动",1);
-	HDMI_ShowInfo(sysMsg, "qr0.txt=\"http://weixin.qq.com/r/",Menu.TerminalInfo.QRcode,1);//44个元素，对应QRcode[44]//https://u.wechat.com/EEAAXRbIIE0YxMhmj9CmUCU//\"http://weixin.qq.com/r/
-	HDMI_ShowInfo(sysMsg, "n4.val=", Menu.DataInfo.Year,0);
-	HDMI_ShowInfo(sysMsg, "n3.val=", Menu.DataInfo.Mounth,0);
-	HDMI_ShowInfo(sysMsg, "n2.val=", Menu.DataInfo.Day,0);
+	HDMI_ShowInfo(sysMsg, "qr0.txt=\"http://weixin.qq.com/r/",Menu->TerminalInfo.QRcode,1);//44个元素，对应QRcode[44]//https://u.wechat.com/EEAAXRbIIE0YxMhmj9CmUCU//\"http://weixin.qq.com/r/
+	HDMI_ShowInfo(sysMsg, "n4.val=", Menu->DataInfo.Year,0);
+	HDMI_ShowInfo(sysMsg, "n3.val=", Menu->DataInfo.Mounth,0);
+	HDMI_ShowInfo(sysMsg, "n2.val=", Menu->DataInfo.Day,0);
 	String_Clear(sysMsg,50);
 	strcpy(sysMsg,"n1.val=");
-	strcat(sysMsg,Menu.DataInfo.Hour);
+	strcat(sysMsg,Menu->DataInfo.Hour);
 	strcat(sysMsg,"+8");
 	HDMI_CMD_Send(sysMsg);
-	HDMI_ShowInfo(sysMsg, "n0.val=", Menu.DataInfo.Minute,0);
+	HDMI_ShowInfo(sysMsg, "n0.val=", Menu->DataInfo.Minute,0);
 }
 /*******************************************************************************
 * 函 数 名         : HDMIShowSignal

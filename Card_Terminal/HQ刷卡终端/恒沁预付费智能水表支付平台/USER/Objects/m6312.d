@@ -15,5 +15,7 @@
 .\objects\m6312.o: ..\SYSTEM\inc\Usart3_HDMI.h
 .\objects\m6312.o: ..\SYSTEM\inc\systick.h
 .\objects\m6312.o: C:\Keil\ARM\ARMCC\Bin\..\include\string.h
+.\objects\m6312.o: ..\HARDWARE\inc\PC_Config.h
+.\objects\m6312.o: ..\SYSTEM\inc\Usart2_PC.h
 .\objects\m6312.o: ..\SYSTEM\inc\String_Config.h
 .\objects\m6312.o: ..\Utils\inc\utils.h
