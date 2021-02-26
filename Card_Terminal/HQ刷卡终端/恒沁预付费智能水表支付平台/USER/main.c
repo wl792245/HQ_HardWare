@@ -22,26 +22,36 @@ int main(void)
 	BSP_Init();
 	while(1)
 	{
-    //Card_Deal();
 		if(SCCardIsInter == 1)
 		{
 			TIM_Cmd(TIM3,DISABLE); //使能或者失能TIMx外设
-			sec = 0;
+			Server_Time = 0;
 			SCCardIsInter = 0;
 			HDMIShowWait();
 			SCCard_Deal();
+		  while(GPIO_ReadInputDataBit(SCCARD_INIT_Port,SCCARD_INIT_CSW)==0)	//卡物理在线，等待
+			{
+				;
+			}
+			HDMIShowMenuInfo(&DeviceInfo);        //主界面显示
 			TIM_Cmd(TIM3,ENABLE); //使能或者失能TIMx外设
 		}
-		//定时器处理
-		if(TimeIsInter == 1)
+		//定时器服务器处理
+		if(Server_TimeIsInter == 1)
 		{
+			Server_TimeIsInter = 0;
 			
+		}
+		//定时器电脑处理
+		if(PC_TimeIsInter == 1)
+		{
+			PC_TimeIsInter = 0;
 		}
 		//电脑重启处理
 		if (PC_RestartFlag == 1)
 		{
 			TIM_Cmd(TIM3,DISABLE); //使能或者失能TIMx外设
-			sec = 0;
+			Server_Time = 0;
 			PC_RestartFlag = 0;
 			PC_Close();
 			delay_ms(941);
@@ -58,9 +68,10 @@ int main(void)
 		if (M6312_RestartFlag == 1)
 		{
 			TIM_Cmd(TIM3,DISABLE); //使能或者失能TIMx外设
-			sec = 0;
+			Server_Time = 0;
 			M6312_RestartFlag = 0;
-			M6312_Connect(DeviceInfo.ServerInfo.ServerIP, DeviceInfo.ServerInfo.ServerPort, "网络连接中...");  //M6312连接服务器,信号强度检测，时间读取
+			M6312_Connect(&DeviceInfo, "网络连接中...");  //M6312连接服务器,信号强度检测，时间读取
+			M6312_Connecting = 0;
 			HDMIShowMenuInfo(&DeviceInfo);        //主界面显示
 			TIM_Cmd(TIM3,ENABLE); //使能或者失能TIMx外设
 		}

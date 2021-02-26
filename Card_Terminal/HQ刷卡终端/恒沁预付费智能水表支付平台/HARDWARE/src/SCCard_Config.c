@@ -81,10 +81,6 @@ u8 SCCard_PCDataSpit(PSCCard_5557PC SCCardPC,char *pdst_ServerSend,char *psrc_PC
 				//新购水未圈存，请先刷表
 			if ((strcmp(SCCardPC->iCardTypeSC, "288") == 0)||(strcmp(SCCardPC->iCardTypeSC, "298") == 0))
 			{
-				HDMIShowInfo("请先刷表");
-				delay_ms(10);
-				PC_StartPam("请先刷表");
-				delay_ms(100);
 				return 2;
 			}
 			else
@@ -174,6 +170,7 @@ void SCCard_ServerDataSpit(PSCCard_Server SCCardServer,const SCCard_5557PC SCCar
 						{
 							//充值成功
 							HDMIShowRechargeSucess(SCCardServer->BuyMonenySC, 0);
+							Result_StartPam(SCCardServer->BuyMonenySC, 0);
 						}
 						else if (strcmp(psrc_Server,"updateorderstateOK1")==0)
 						{

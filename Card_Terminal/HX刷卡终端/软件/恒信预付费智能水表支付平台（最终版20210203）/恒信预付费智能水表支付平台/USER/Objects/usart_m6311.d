@@ -1,0 +1,15 @@
+.\objects\usart_m6311.o: ..\SYSTEM\src\Usart_M6311.c
+.\objects\usart_m6311.o: ..\FWlib\inc\stm32f10x_usart.h
+.\objects\usart_m6311.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\usart_m6311.o: ..\CORE\core_cm3.h
+.\objects\usart_m6311.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\usart_m6311.o: ..\SYSTEM\inc\system_stm32f10x.h
+.\objects\usart_m6311.o: ..\SYSTEM\inc\stm32f10x_conf.h
+.\objects\usart_m6311.o: ..\FWlib\inc\stm32f10x_gpio.h
+.\objects\usart_m6311.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\usart_m6311.o: ..\FWlib\inc\stm32f10x_rcc.h
+.\objects\usart_m6311.o: ..\FWlib\inc\misc.h
+.\objects\usart_m6311.o: ..\SYSTEM\inc\Usart_M6311.h
+.\objects\usart_m6311.o: C:\Keil\ARM\ARMCC\Bin\..\include\string.h
+.\objects\usart_m6311.o: ..\SYSTEM\inc\systick.h
+.\objects\usart_m6311.o: ..\SYSTEM\inc\String_Get.h

@@ -1,0 +1,17 @@
+.\objects\xfs.o: ..\HARDWARE\src\XFS.c
+.\objects\xfs.o: ..\HARDWARE\inc\XFS.h
+.\objects\xfs.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\xfs.o: ..\CORE\core_cm3.h
+.\objects\xfs.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\xfs.o: ..\SYSTEM\inc\system_stm32f10x.h
+.\objects\xfs.o: ..\SYSTEM\inc\stm32f10x_conf.h
+.\objects\xfs.o: ..\FWlib\inc\stm32f10x_gpio.h
+.\objects\xfs.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\xfs.o: ..\FWlib\inc\stm32f10x_rcc.h
+.\objects\xfs.o: ..\FWlib\inc\misc.h
+.\objects\xfs.o: ..\SYSTEM\inc\Uart_XFS.h
+.\objects\xfs.o: ..\HARDWARE\inc\HDMI_T050.h
+.\objects\xfs.o: ..\HARDWARE\inc\AT24C02.h
+.\objects\xfs.o: ..\SYSTEM\inc\Uart_HDMI.h
+.\objects\xfs.o: ..\SYSTEM\inc\systick.h
+.\objects\xfs.o: C:\Keil\ARM\ARMCC\Bin\..\include\string.h

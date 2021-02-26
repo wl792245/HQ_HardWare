@@ -1,0 +1,12 @@
+.\objects\iic_card.o: ..\SYSTEM\src\IIC_Card.c
+.\objects\iic_card.o: ..\SYSTEM\inc\IIC_Card.h
+.\objects\iic_card.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\iic_card.o: ..\CORE\core_cm3.h
+.\objects\iic_card.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\iic_card.o: ..\SYSTEM\inc\system_stm32f10x.h
+.\objects\iic_card.o: ..\SYSTEM\inc\stm32f10x_conf.h
+.\objects\iic_card.o: ..\FWlib\inc\stm32f10x_gpio.h
+.\objects\iic_card.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\iic_card.o: ..\FWlib\inc\stm32f10x_rcc.h
+.\objects\iic_card.o: ..\FWlib\inc\misc.h
+.\objects\iic_card.o: ..\SYSTEM\inc\systick.h

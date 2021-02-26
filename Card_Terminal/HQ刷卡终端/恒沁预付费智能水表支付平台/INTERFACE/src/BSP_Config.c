@@ -34,7 +34,7 @@ void BSP_Init(void)
 	//设备开始工作
 	PC_Open();                         //微电脑开机
 	AT24C02IPTid_Init();               //初始化获取机器号、服务器IPPORT
-  M6312_Connect(DeviceInfo.ServerInfo.ServerIP, DeviceInfo.ServerInfo.ServerPort, "网络连接中...");  //M6312连接服务器,信号强度检测，时间读取
+  M6312_Connect(&DeviceInfo, "网络连接中...");  //M6312连接服务器,信号强度检测，时间读取
 	FirstHeart_Open(DeviceInfo.TerminalInfo.TerminalId); //第一次握手
 	PC_Start();                        //电脑启动
 	TIM_Heart_Init(9999,7199,1,0);     //心跳定时器时基1s，600秒握手一次

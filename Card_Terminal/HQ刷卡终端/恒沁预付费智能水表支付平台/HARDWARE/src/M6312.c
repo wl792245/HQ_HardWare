@@ -100,7 +100,7 @@ static int M6312_RConnect(void)
 * 输    入         : IP:IP地址；Port:端口号
 * 输    出         : 无
 *******************************************************************************/
-void M6312_Connect(char *IP,char *Port, char *ShowInfo)
+void M6312_Connect(pDeviceInit pServerInfo,char *ShowInfo)
 {
   int isStartNet = 1;      //启动是否成功标志位
   int isConnect = 0;
@@ -179,9 +179,9 @@ void M6312_Connect(char *IP,char *Port, char *ShowInfo)
 			}
 			delay_ms(941);
 			strcpy(M6312ConfigMsg,"AT+IPSTART=\"TCP\",\"");//建立 TCP 连接或注册 UDP 端口号
-			strcat(M6312ConfigMsg,IP);
+			strcat(M6312ConfigMsg,pServerInfo->ServerInfo.ServerIP);
 			strcat(M6312ConfigMsg,"\",");
-			strcat(M6312ConfigMsg,Port);
+			strcat(M6312ConfigMsg,pServerInfo->ServerInfo.ServerPort);
 			strcat(M6312ConfigMsg,"\r\n");
 			if(USART_M6312_SendCmd(M6312ConfigMsg,"CONNECT",941)==0)//30000->3000，20181022，3秒足够
 			{
@@ -189,7 +189,7 @@ void M6312_Connect(char *IP,char *Port, char *ShowInfo)
 			}
 			//连接成功
 			//HDMIShowInfo("连接成功");
-			M6312_Signal =M6312_SignalQuery(DeviceInfo.TerminalInfo.SignalStrength);  //信号强度检测
+			M6312_Signal =M6312_SignalQuery(pServerInfo->TerminalInfo.SignalStrength);  //信号强度检测
 			if (1 == M6312_RestartFlag)
 			{
 				continue;
@@ -229,7 +229,7 @@ u8 M6312_UploadData(char * pdest,char *psrc, char *txt, int times,int len)
 		{
 			M6312_SendData(psrc, strlen(psrc)); //上传数据到服务器
 			Sendtimes++;  
-			for (i=0; i<20; i++)  //等待返回数据
+			for (i=0; i<10; i++)  //等待返回数据
 			{
 				if (usart1_rcv_len > 0) 
 				{
@@ -239,9 +239,9 @@ u8 M6312_UploadData(char * pdest,char *psrc, char *txt, int times,int len)
 						break;
 					}
 				}
-				delay_ms(600);
+				delay_ms(500);
 			}
-			if (i < 20)
+			if (i < 10)
 			{
 				netisbreak = 1;
 				break;

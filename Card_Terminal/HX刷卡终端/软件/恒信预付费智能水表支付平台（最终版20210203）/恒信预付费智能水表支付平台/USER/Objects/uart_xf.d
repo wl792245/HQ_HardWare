@@ -1,0 +1,12 @@
+.\objects\uart_xf.o: ..\SYSTEM\src\Uart_XF.c
+.\objects\uart_xf.o: ..\SYSTEM\inc\Uart_XF.h
+.\objects\uart_xf.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\uart_xf.o: ..\CORE\core_cm3.h
+.\objects\uart_xf.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\uart_xf.o: ..\SYSTEM\inc\system_stm32f10x.h
+.\objects\uart_xf.o: ..\SYSTEM\inc\stm32f10x_conf.h
+.\objects\uart_xf.o: ..\FWlib\inc\stm32f10x_gpio.h
+.\objects\uart_xf.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\uart_xf.o: ..\FWlib\inc\stm32f10x_rcc.h
+.\objects\uart_xf.o: ..\FWlib\inc\misc.h
+.\objects\uart_xf.o: ..\FWlib\inc\stm32f10x_usart.h

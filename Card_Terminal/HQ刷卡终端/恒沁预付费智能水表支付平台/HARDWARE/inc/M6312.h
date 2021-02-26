@@ -22,7 +22,7 @@ extern volatile unsigned char M6312_Signal;
 extern volatile unsigned char M6312_Connecting;
 extern volatile unsigned char M6312_RestartFlag;
 void M6312_Init(u32 Bound, u16 m_irq, u16 s_irq);
-void M6312_Connect(char *IP,char *Port, char *ShowInfo);
+void M6312_Connect(pDeviceInit pServerInfo,char *ShowInfo);
 void M6312_SendData(char * buf,uint32_t len);
 void M6312_USART_GetRcvData(char *buf, uint32_t rcv_len);
 unsigned char M6312_SignalQuery(char *Signal);

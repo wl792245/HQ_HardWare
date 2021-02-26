@@ -284,18 +284,43 @@ void PC_USB_GetRcvData(char * buf, int rcv_len)
 *******************************************************************************/
 void PC_StartPam(char *txt)
 {
-	int i;
+	int i, len;
 	String_Clear(SendBuf, strlen(SendBuf));
 	PAM8406_Open();
+	len = strlen(txt);
 	strcpy(SendBuf,"StartPam%");
 	strcat(SendBuf,txt);		//两个字符串合并
 	strcat(SendBuf,"%$$");
 	PC_SendData(SendBuf);
-	for(i=0;i<7;i++)
+	for(i=0;i<len;i++)
 	{
-		delay_ms(1431);	
+		delay_ms(300);	
 	}
 	PAM8406_Close();
+}
+/*******************************************************************************
+* 函 数 名         : Result_StartPam
+* 函数功能		     : 结果语音播报
+* 输    入         : RechargeSucessValue:充值金额  Unit：单位
+* 输    出         : 无
+*******************************************************************************/
+void Result_StartPam(char *RechargeSucessValue,int Unit)
+{
+	char SucessString[50];
+	String_Clear(SucessString, 50);
+  strcpy(SucessString,"您已成功充值");
+	strcat(SucessString,RechargeSucessValue);
+	if(Unit==0)
+	{
+		strcat(SucessString,"元");	
+	}
+	else
+	{
+	  strcat(SucessString,"吨");
+	}
+	PC_StartPam(SucessString);
+	delay_ms(1000);
+	
 }
 /*******************************************************************************
 * 函 数 名         : PC_Start

@@ -1,0 +1,12 @@
+.\objects\uart_hdmi.o: ..\SYSTEM\src\Uart_HDMI.c
+.\objects\uart_hdmi.o: ..\SYSTEM\inc\Uart_HDMI.h
+.\objects\uart_hdmi.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\uart_hdmi.o: ..\CORE\core_cm3.h
+.\objects\uart_hdmi.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\uart_hdmi.o: ..\SYSTEM\inc\system_stm32f10x.h
+.\objects\uart_hdmi.o: ..\SYSTEM\inc\stm32f10x_conf.h
+.\objects\uart_hdmi.o: ..\FWlib\inc\stm32f10x_gpio.h
+.\objects\uart_hdmi.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\uart_hdmi.o: ..\FWlib\inc\stm32f10x_rcc.h
+.\objects\uart_hdmi.o: ..\FWlib\inc\misc.h
+.\objects\uart_hdmi.o: ..\FWlib\inc\stm32f10x_usart.h

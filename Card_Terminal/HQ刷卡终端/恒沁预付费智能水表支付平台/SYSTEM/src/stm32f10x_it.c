@@ -170,13 +170,18 @@ void TIM3_IRQHandler()
 	{
 		TIM_ClearITPendingBit(TIM3, TIM_IT_Update  );	//清除中断标志
 	}
-	sec++;
-	if(sec >= 600)  //10分钟握手一次
+	Server_Time++;
+	PC_Time++;
+	if(Server_Time >= 600)  //10分钟与服务器握手一次
 	{
-		sec=0;
-		TimeIsInter = 1;
+		Server_Time=0;
+		Server_TimeIsInter = 1;
 	}
-	
+	if(PC_Time>= 120)      //2分钟与电脑握手一次
+	{
+		PC_Time = 0;
+		PC_TimeIsInter = 1;
+	}
 	TIM_Cmd(TIM3,ENABLE); //使能或者失能TIMx外设	
 }
 

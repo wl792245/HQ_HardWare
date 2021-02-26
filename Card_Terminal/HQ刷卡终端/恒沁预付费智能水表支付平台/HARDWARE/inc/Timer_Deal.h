@@ -14,9 +14,11 @@
 
 
 
-extern volatile u32  sec;
+extern volatile u32  Server_Time;  //与服务器握手时间
+extern volatile u32  PC_Time;      //与电脑握手时间
 extern volatile u32  err;
-extern volatile uint32_t   TimeIsInter;
+extern volatile uint32_t   Server_TimeIsInter;
+extern volatile uint32_t   PC_TimeIsInter;
 
 void FirstHeart_Open(char *TerminalId);
 void TIM_Heart_Deal(void);

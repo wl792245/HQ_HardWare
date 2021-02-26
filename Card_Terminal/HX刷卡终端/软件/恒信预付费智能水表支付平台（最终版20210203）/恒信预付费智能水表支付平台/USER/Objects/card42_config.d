@@ -1,0 +1,13 @@
+.\objects\card42_config.o: ..\HARDWARE\src\Card42_Config.c
+.\objects\card42_config.o: ..\HARDWARE\inc\Card42_Config.h
+.\objects\card42_config.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\card42_config.o: ..\CORE\core_cm3.h
+.\objects\card42_config.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\card42_config.o: ..\SYSTEM\inc\system_stm32f10x.h
+.\objects\card42_config.o: ..\SYSTEM\inc\stm32f10x_conf.h
+.\objects\card42_config.o: ..\FWlib\inc\stm32f10x_gpio.h
+.\objects\card42_config.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\card42_config.o: ..\FWlib\inc\stm32f10x_rcc.h
+.\objects\card42_config.o: ..\FWlib\inc\misc.h
+.\objects\card42_config.o: ..\SYSTEM\inc\IIC_Card.h
+.\objects\card42_config.o: ..\SYSTEM\inc\systick.h

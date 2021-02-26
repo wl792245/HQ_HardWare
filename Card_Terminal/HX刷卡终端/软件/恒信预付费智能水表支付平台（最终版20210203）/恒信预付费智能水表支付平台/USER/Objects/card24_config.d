@@ -1,0 +1,13 @@
+.\objects\card24_config.o: ..\HARDWARE\src\Card24_Config.c
+.\objects\card24_config.o: ..\HARDWARE\inc\Card24_Config.h
+.\objects\card24_config.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\card24_config.o: ..\CORE\core_cm3.h
+.\objects\card24_config.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\card24_config.o: ..\SYSTEM\inc\system_stm32f10x.h
+.\objects\card24_config.o: ..\SYSTEM\inc\stm32f10x_conf.h
+.\objects\card24_config.o: ..\FWlib\inc\stm32f10x_gpio.h
+.\objects\card24_config.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\card24_config.o: ..\FWlib\inc\stm32f10x_rcc.h
+.\objects\card24_config.o: ..\FWlib\inc\misc.h
+.\objects\card24_config.o: ..\SYSTEM\inc\IIC_Card.h
+.\objects\card24_config.o: ..\SYSTEM\inc\systick.h

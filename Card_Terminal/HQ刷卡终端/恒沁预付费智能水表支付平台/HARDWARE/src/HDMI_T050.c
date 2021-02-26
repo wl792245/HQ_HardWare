@@ -92,6 +92,7 @@ static void HDMI_UnitShowInfo(char *pDest, char *pControl, char *pString, int un
 	  strcat(pDest," ¶Ö\"");
 	}
 	HDMI_CMD_Send(pDest);
+
 }
 /*******************************************************************************
 * º¯ Êý Ãû         : NetSignalDisplay

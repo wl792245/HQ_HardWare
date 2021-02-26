@@ -1,0 +1,12 @@
+.\objects\iic_24c02.o: ..\SYSTEM\src\IIC_24C02.c
+.\objects\iic_24c02.o: ..\SYSTEM\inc\IIC_24C02.h
+.\objects\iic_24c02.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\iic_24c02.o: ..\CORE\core_cm3.h
+.\objects\iic_24c02.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\iic_24c02.o: ..\SYSTEM\inc\system_stm32f10x.h
+.\objects\iic_24c02.o: ..\SYSTEM\inc\stm32f10x_conf.h
+.\objects\iic_24c02.o: ..\FWlib\inc\stm32f10x_gpio.h
+.\objects\iic_24c02.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\iic_24c02.o: ..\FWlib\inc\stm32f10x_rcc.h
+.\objects\iic_24c02.o: ..\FWlib\inc\misc.h
+.\objects\iic_24c02.o: ..\SYSTEM\inc\systick.h

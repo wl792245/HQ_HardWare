@@ -1,0 +1,15 @@
+.\objects\card57_config.o: ..\HARDWARE\src\Card57_Config.c
+.\objects\card57_config.o: ..\HARDWARE\inc\Card57_Config.h
+.\objects\card57_config.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\card57_config.o: ..\CORE\core_cm3.h
+.\objects\card57_config.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\card57_config.o: ..\SYSTEM\inc\system_stm32f10x.h
+.\objects\card57_config.o: ..\SYSTEM\inc\stm32f10x_conf.h
+.\objects\card57_config.o: ..\FWlib\inc\stm32f10x_gpio.h
+.\objects\card57_config.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\card57_config.o: ..\FWlib\inc\stm32f10x_rcc.h
+.\objects\card57_config.o: ..\FWlib\inc\misc.h
+.\objects\card57_config.o: ..\SYSTEM\inc\IIC_Card.h
+.\objects\card57_config.o: ..\FWlib\inc\stm32f10x_exti.h
+.\objects\card57_config.o: ..\SYSTEM\inc\systick.h
+.\objects\card57_config.o: C:\Keil\ARM\ARMCC\Bin\..\include\string.h

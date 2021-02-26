@@ -37,6 +37,7 @@ void PC_USB_GetRcvData(char * buf, int rcv_len);
 u8 PC_ReadData(char * pdest,  const char times,int len);
 u8 PC_WirteData(char * pdest, const char *psrc, const char times,int len, CardType_Info CardTypeInfo);
 void USART_PC_SendData(char * buf,uint32_t len);
+void Result_StartPam(char *RechargeSucessValue,int Unit);
 
 #endif
 /******************** (C) COPYRIGHT 2021 江苏恒沁科技有限公司 ********************/

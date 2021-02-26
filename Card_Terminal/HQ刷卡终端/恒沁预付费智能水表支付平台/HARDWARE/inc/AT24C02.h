@@ -45,7 +45,7 @@ typedef struct Terminal
 	char TerminalV[5];				       //设备版本号
 	char QRcode[26];				         //二维码
 	char SignalStrength[3];			     //信号强度
-	char Fault;			                 //故障类型
+	char Fault[3];			             //故障类型
 }TerminalInit;
 
 //服务器信息结构体定义

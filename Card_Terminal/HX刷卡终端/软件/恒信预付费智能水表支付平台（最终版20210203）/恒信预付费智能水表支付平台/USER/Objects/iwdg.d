@@ -1,0 +1,12 @@
+.\objects\iwdg.o: ..\SYSTEM\src\IWDG.c
+.\objects\iwdg.o: ..\SYSTEM\inc\IWDG.h
+.\objects\iwdg.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\iwdg.o: ..\CORE\core_cm3.h
+.\objects\iwdg.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\iwdg.o: ..\SYSTEM\inc\system_stm32f10x.h
+.\objects\iwdg.o: ..\SYSTEM\inc\stm32f10x_conf.h
+.\objects\iwdg.o: ..\FWlib\inc\stm32f10x_gpio.h
+.\objects\iwdg.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\iwdg.o: ..\FWlib\inc\stm32f10x_rcc.h
+.\objects\iwdg.o: ..\FWlib\inc\misc.h
+.\objects\iwdg.o: ..\FWlib\inc\stm32f10x_iwdg.h

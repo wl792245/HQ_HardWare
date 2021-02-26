@@ -1,0 +1,12 @@
+.\objects\timer_heart.o: ..\SYSTEM\src\Timer_Heart.c
+.\objects\timer_heart.o: ..\SYSTEM\inc\Timer_Heart.h
+.\objects\timer_heart.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\timer_heart.o: ..\CORE\core_cm3.h
+.\objects\timer_heart.o: C:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\timer_heart.o: ..\SYSTEM\inc\system_stm32f10x.h
+.\objects\timer_heart.o: ..\SYSTEM\inc\stm32f10x_conf.h
+.\objects\timer_heart.o: ..\FWlib\inc\stm32f10x_gpio.h
+.\objects\timer_heart.o: ..\SYSTEM\inc\stm32f10x.h
+.\objects\timer_heart.o: ..\FWlib\inc\stm32f10x_rcc.h
+.\objects\timer_heart.o: ..\FWlib\inc\misc.h
+.\objects\timer_heart.o: ..\FWlib\inc\stm32f10x_tim.h
