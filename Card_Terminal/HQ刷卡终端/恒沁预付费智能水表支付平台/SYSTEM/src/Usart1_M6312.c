@@ -123,7 +123,6 @@ int  USART_M6312_SendCmd(char* cmd, char* result,  uint32_t timeOut)
 				delay_ms(941);
 				if((NULL != strstr((const char *)usart1_rcv_buf, (const char *)result)))
 				{
-						delay_ms(200);
 						return 1;
 				}
 				usart1_rcv_len = 0;

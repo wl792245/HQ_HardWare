@@ -15,8 +15,11 @@
 #include "utils.h"
 #include "XFS.h"
 char M6311ConfigMsg[80];  //IP和端口字符组合
-volatile unsigned char M6311_Signal = 31;      //开始默认信号强度
-volatile unsigned char M6311_Connecting = 1;   //正在连接中
+char M6311_RecieveServerBuf[50];//接收服务器返回的结果 
+unsigned char M6311_Signal = 31;      //开始默认信号强度
+unsigned char M6311_Connecting = 1;   //正在连接中
+volatile unsigned char M6311_RestartFlag = 0;  //M6311重启标志位
+
 /*******************************************************************************
 * 函 数 名         : M6311POWER_Init
 * 函数功能		     : M6311电源引脚初始化
@@ -96,49 +99,47 @@ static int M6311_RConnect(void)
 * 输    入         : IP:IP地址；Port:端口号
 * 输    出         : 无
 *******************************************************************************/
-void M6311_Connect(char *IP,char *Port, char *ShowInfo)
+void M6311_Connect(const pDeviceInit pServerInfo, char *ShowInfo)
 {
   int isStartNet = 1;      //启动是否成功标志位
   int isConnect = 0;
 	HDMIShowInfo(ShowInfo);
-	//memset(M6311ConfigMsg, 0, strlen((const char *)M6311ConfigMsg));
 	while (isStartNet)
 	{
 		isConnect = M6311_RConnect();
-		delay_ms(941);
 		if(isConnect)
 		{
 			//上电初始化
 			if(USART_M6311_SendCmd("AT\r\n","OK",842)==0) //测试AT,该命令用来检验是否能和 DCE 模块正常通讯
 			{
-				break; 			
+				continue; 			
 			}
 			delay_ms(941);
 			if(USART_M6311_SendCmd("AT+IPR=115200;&W \r\n","OK",842)==0) //用来设置或读取 DCE 的波特率。在设置了波特率后，对应的工具如超级
 			{
-				break;
+				continue; 
 			}
 			delay_ms(941);
 			if(USART_M6311_SendCmd("AT+CGREG?\r\n","+CGREG: 0,1",842)==0)  //  设置 MT 显示网络注册状态和位置信息
 			{
-				break;
+				continue; 
 			}
 			delay_ms(941);
 			if(USART_M6311_SendCmd("AT+CGDCONT=1,\"IP\",\"CMNET\"\r\n","OK", 862)==0) /*MT 发送 PDP 上下文激活消息的时候使用这个命令配置
 														PDP 上下文参数。系统重启动后，该命令所做的设置将不被保存*/
 			{
-				break;
+				continue; 
 			}
 			delay_ms(941);
 			if(USART_M6311_SendCmd("AT+CGACT=1,1 \r\n","OK", 941)==0) //0：PDP 上下文去活,1：PDP 上下文激活
 			{
-				break;
+				continue; 
 			}
 			delay_ms(941);
 			//建立TCP连接
 			if(USART_M6311_SendCmd("AT+CMMUX=0\r\n","OK",862)==0) //控制是否启用多路连接
 			{
-				break;
+				continue; 
 			}
 			delay_ms(941); 
 			if(USART_M6311_SendCmd("AT+CMMODE=1\r\n","OK",862)==0) /*	1是透传模式（在该模式下，建立连接成功后， 
@@ -146,26 +147,32 @@ void M6311_Connect(char *IP,char *Port, char *ShowInfo)
 														输入数据会发送至服务器，可通过“+++”退出数据模式，
 														退出后请使用 AT+IPCLOSE 释放资源）*/
 			{
-				break;
+				continue; 
 			}
 			delay_ms(941);
 			
 			if(USART_M6311_SendCmd("AT+CMTCFG=1,1024\r\n","OK",862)==0) //配置 TCPIP 透传模式
 			{
-				break;
+				continue; 
 			}
 			delay_ms(941); 
 
 			strcpy(M6311ConfigMsg,"AT+IPSTART=\"TCP\",\"");//建立 TCP 连接或注册 UDP 端口号
-			strcat(M6311ConfigMsg,IP);
+			strcat(M6311ConfigMsg,pServerInfo->ServerInfo.ServerIP);
 			strcat(M6311ConfigMsg,"\",");
-			strcat(M6311ConfigMsg,Port);
+			strcat(M6311ConfigMsg,pServerInfo->ServerInfo.ServerPort);
 			strcat(M6311ConfigMsg,"\r\n");
 			if(USART_M6311_SendCmd(M6311ConfigMsg,"CONNECT",941)==0)//30000->3000，20181022，3秒足够
 			{
-				break;//网络故障，系统复位重启
+				continue; //网络故障，系统复位重启
+			}
+			M6311_SignalQuery(pServerInfo->TerminalInfo.SignalStrength);
+			if (0x63 == M6311_RestartFlag)
+			{
+				continue;
 			}
 			isStartNet = 0;
+			HDMISendConncetOK();
 			delay_ms(941);
 		}
 	}
@@ -237,15 +244,14 @@ void M6311_USART_GetRcvData(char *buf, uint32_t rcv_len)
 /*******************************************************************************
 * 函 数 名         : M6311_SignalQuery
 * 函数功能		     : 查询信号强度 
-* 输    入         : 无
+* 输    入         : Signal：信号强度值
 * 输    出         : 无
 *******************************************************************************/
-unsigned char M6311_SignalQuery(char *Signal)
+void M6311_SignalQuery(char *Signal)
 {
 	u8 i,j,k;
 	
-  unsigned char SignalValue[1];
-	char RecieveServerBuf[50];//接收服务器返回的结果 
+	M6311_RestartFlag = 0;
 	k = 0;
 	while(k<3)
 	{
@@ -254,56 +260,57 @@ unsigned char M6311_SignalQuery(char *Signal)
 		{
 			break;
 		}
+	}
+	if (k >= 3)
+	{
+		M6311_RestartFlag = 0x63;
+	}
+	else
+	{
+		k = 0;
+		while (k<3)
+		{
+			k++;
+			if(USART_M6311_SendCmd("AT+CSQ\r\n","CSQ",1000)==1)//查询信号强度
+			{
+				break;
+			}
+		}
+		if (k >= 3)
+		{
+			M6311_RestartFlag = 0x63;  //
+		}
 		else
 		{
-			if(k>=3)
+			String_Clear(M6311_RecieveServerBuf, 50);
+			M6311_USART_GetRcvData(M6311_RecieveServerBuf, usart2_rcv_len);
+			i=0;
+			while (M6311_RecieveServerBuf[i]!=':') 
 			{
-				CPU_Reset();
+				i++; 
+			}
+			i++;
+			while (M6311_RecieveServerBuf[i]!=' ')
+			{
+				i++; 
+			}
+			j=0;
+			i++;
+			while (M6311_RecieveServerBuf[i]!=',') 
+			{						
+				Signal[j]=M6311_RecieveServerBuf[i];//取信号强度
+				i++;j++;
+			}
+			Signal[i]='\0';
+			if(USART_M6311_SendCmd("ATO\r\n","OK",1000)==1)// 回到数据连接模式
+			{
+				StrToDec(&M6311_Signal,Signal);	
+			}
+			else
+			{
+				M6311_RestartFlag = 0x63;  //
 			}
 		}
 	}
-  k = 0;
-	while (k<3)
-	{
-		k++;
-		if(USART_M6311_SendCmd("AT+CSQ\r\n","CSQ",1000)==1)//查询信号强度
-		{
-			break;
-		}
-		else
-		{
-			if(k>=3)
-			{
-				CPU_Reset();
-			}
-		}
-	}
-	String_Clear(RecieveServerBuf, 50);
-	M6311_USART_GetRcvData(RecieveServerBuf, usart2_rcv_len);
-	i=0;
-	while (RecieveServerBuf[i]!=':') 
-	{
-		i++; 
-	}
-	i++;
-	while (RecieveServerBuf[i]!=' ')
-	{
-		i++; 
-	}
-	j=0;
-	i++;
-  while (RecieveServerBuf[i]!=',') 
-	{						
-		Signal[j]=RecieveServerBuf[i];//取信号强度
-		i++;j++;
-	}
-	Signal[i]='\0';
-	if(USART_M6311_SendCmd("ATO\r\n","OK",1000)==0)// 回到数据连接模式
-	{
-		CPU_Reset();
-	}
-	StrToDec(SignalValue,Signal);
-	//HDMIShowSignal(SignalValue[0]);
-	return SignalValue[0];
 }
 /******************** (C) COPYRIGHT 2021 江苏恒沁科技有限公司 ********************/

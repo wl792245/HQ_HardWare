@@ -22,6 +22,8 @@ int main(void)
 	BSP_Init();
 	while(1)
 	{
+		Remote_ChangeIp();  //远程IP二维码更改
+		//三川卡处理
 		if(SCCardIsInter == 1)
 		{
 			TIM_Cmd(TIM3,DISABLE); //使能或者失能TIMx外设
@@ -48,7 +50,7 @@ int main(void)
 			PC_TimeIsInter = 0;
 		}
 		//电脑重启处理
-		if (PC_RestartFlag == 1)
+		if (PC_RestartFlag == 0x86)
 		{
 			TIM_Cmd(TIM3,DISABLE); //使能或者失能TIMx外设
 			Server_Time = 0;
@@ -65,15 +67,18 @@ int main(void)
 			TIM_Cmd(TIM3,ENABLE); //使能或者失能TIMx外设
 		}
 		//M6312重启
-		if (M6312_RestartFlag == 1)
+		if (M6312_RestartFlag == 0x63)
 		{
 			TIM_Cmd(TIM3,DISABLE); //使能或者失能TIMx外设
 			Server_Time = 0;
 			M6312_RestartFlag = 0;
-			M6312_Connect(&DeviceInfo, "网络连接中...");  //M6312连接服务器,信号强度检测，时间读取
-			M6312_Connecting = 0;
+			Restart_Count = ReStart_Read(DeviceInfo.TerminalInfo.ReStart); //获取重启次数
+			Restart_Count +=1;
+			ResStart_Write(DeviceInfo.TerminalInfo.ReStart, Restart_Count);  //写入重启次数
+			M6312_Connect(&DeviceInfo, "网络重连中...");  //M6312连接服务器,信号强度检测，时间读取
+			FirstHeart_Open(DeviceInfo.TerminalInfo.TerminalId); //第一次握手
 			HDMIShowMenuInfo(&DeviceInfo);        //主界面显示
-			TIM_Cmd(TIM3,ENABLE); //使能或者失能TIMx外设
+			TIM_Cmd(TIM3,ENABLE); //使能或者失能TIMx外设,服务器定时器重新开始计时
 		}
 	}
 }

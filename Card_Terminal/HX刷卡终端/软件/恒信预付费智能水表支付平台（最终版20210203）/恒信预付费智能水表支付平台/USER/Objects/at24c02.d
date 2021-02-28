@@ -12,3 +12,4 @@
 .\objects\at24c02.o: ..\SYSTEM\inc\IIC_24C02.h
 .\objects\at24c02.o: ..\SYSTEM\inc\systick.h
 .\objects\at24c02.o: ..\SYSTEM\inc\String_Get.h
+.\objects\at24c02.o: C:\Keil\ARM\ARMCC\Bin\..\include\string.h

@@ -17,8 +17,8 @@
 .\objects\cardinfodeal.o: C:\Keil\ARM\ARMCC\Bin\..\include\string.h
 .\objects\cardinfodeal.o: ..\HARDWARE\inc\M6311.h
 .\objects\cardinfodeal.o: ..\SYSTEM\inc\Usart_M6311.h
-.\objects\cardinfodeal.o: ..\SYSTEM\inc\systick.h
 .\objects\cardinfodeal.o: ..\HARDWARE\inc\AT24C02.h
+.\objects\cardinfodeal.o: ..\SYSTEM\inc\systick.h
 .\objects\cardinfodeal.o: ..\HARDWARE\inc\XFS.h
 .\objects\cardinfodeal.o: ..\SYSTEM\inc\Uart_XFS.h
 .\objects\cardinfodeal.o: ..\HARDWARE\inc\HDMI_T050.h

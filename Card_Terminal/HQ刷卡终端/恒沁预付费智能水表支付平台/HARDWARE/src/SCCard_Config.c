@@ -100,7 +100,7 @@ u8 SCCard_PCDataSpit(PSCCard_5557PC SCCardPC,char *pdst_ServerSend,char *psrc_PC
 		}
 		else
 		{
-			    return 0;
+			  return 0;
 		}
 		
 }
@@ -175,7 +175,6 @@ void SCCard_ServerDataSpit(PSCCard_Server SCCardServer,const SCCard_5557PC SCCar
 						else if (strcmp(psrc_Server,"updateorderstateOK1")==0)
 						{
 							HDMIShowInfo("交易关闭，请营业厅办理");
-							delay_ms(10);
 							PC_StartPam("交易关闭，请营业厅办理");
 						}
 					}						
@@ -193,7 +192,6 @@ void SCCard_ServerDataSpit(PSCCard_Server SCCardServer,const SCCard_5557PC SCCar
 			else
 			{
 				HDMIShowInfo("充值失败，请重新刷卡");
-				delay_ms(10);
 				PC_StartPam("充值失败，请重新刷卡");
 			}
 		}
@@ -232,43 +230,36 @@ void SCCard_ServerDataSpit(PSCCard_Server SCCardServer,const SCCard_5557PC SCCar
 		else if(strcmp(SCCardServer->ServerRecHead,"SC5557USERPerr0")==0)//未知用户，请营业厅办理
 		{
 			HDMIShowInfo("未知用户，请营业厅办理");
-			delay_ms(10);
 			PC_StartPam("未知用户，请营业厅办理");
 		}
 		else if(strcmp(SCCardServer->ServerRecHead,"SANC5557Perr1")==0)//请微信支付后再刷卡
 		{
 			HDMIShowInfo("请微信支付后再刷卡");
-			delay_ms(10);
 			PC_StartPam("请微信支付后再刷卡");
 		}
 		else if(strcmp(SCCardServer->ServerRecHead,"SC5557USERPerr2")==0)//请微信支付后再刷卡
 		{
 			HDMIShowInfo("请微信支付后再刷卡");
-			delay_ms(10);
 			PC_StartPam("请微信支付后再刷卡");
 		}
 		else if(strcmp(SCCardServer->ServerRecHead,"SANC5557err3")==0)//无效卡，请营业厅办理
 		{
 			HDMIShowInfo("无效卡，请营业厅办理");
-			delay_ms(10);
 			PC_StartPam("无效卡，请营业厅办理");
 		}
 		else if(strcmp(SCCardServer->ServerRecHead,"SC5557USERPerr12")==0)//交易关闭，请营业厅办理
 		{
 			HDMIShowInfo("交易关闭，请营业厅办理");
-			delay_ms(10);
 			PC_StartPam("交易关闭，请营业厅办理");
 		}
 		else if(strcmp(SCCardServer->ServerRecHead,"WebserviceErro")==0)
 		{
 			HDMIShowInfo("网络服务未开启");
-			delay_ms(10);
 			PC_StartPam("网络服务未开启");
 		}
 		else if(strcmp(SCCardServer->ServerRecHead,"WebNoAnswer")==0)
 		{
 			HDMIShowInfo("网络无响应");
-			delay_ms(10);
 			PC_StartPam("网络无响应");
 		}
 		else if(strcmp(SCCardServer->ServerRecHead,"SANC5557PCID")==0)

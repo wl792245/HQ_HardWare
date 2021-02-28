@@ -24,9 +24,10 @@
 #include "sys.h"
 #include "systick.h"
 #include "CardInfoDeal.h"
+#include "String_Config.h"
 
 void BSP_Init(void);
-void Card_Deal(void);
+void Remote_ChangeIp(void);
 #endif
 
 /******************** (C) COPYRIGHT 2021 江苏恒沁科技有限公司 ********************/

@@ -84,19 +84,16 @@ void Card_IRQHandler(void)
 				  Card24_LadderReadCID(&Info24ladder1);   	//读24阶梯卡
 					if(Info24ladder1.cflag==0xC4)       //服务器IP修改卡
 					{
-						if (CopyIPPortTo24C02())                 //将配置卡的服务器地址复制到开发板上的24c02
+						if ((CopyIPPortTo24C02()) && (CopyQRcodeTo24C02()))                 //将配置卡的服务器地址复制到开发板上的24c02
 						{
-							XFS_HDMI_Play("服务器IP更改失败，请重试");
+							XFS_HDMI_Play("更改失败，请重试");
 						}
-						if (CopyQRcodeTo24C02())               //将配置卡的二维码复制到开发板上的24c02
+						else
 						{
-							XFS_HDMI_Play("二维码更改失败，请重试");
+							XFS_HDMI_Play("IP二维码更改成功");
+							AT24C02IPTid_Init();
+							M6311_RestartFlag = 0x63;  //
 						}
-						HDMIShowChangeSuccess();
-						XFS_Only_Play("IP二维码更改成功");
-						AT24C02IPTid_Init();
-						delay_ms(1000);
-						CPU_Reset();
 					}
 					else if ((Info24ladder1.cflag!=0xC4)&&(M6311_Connecting == 1))
 					{

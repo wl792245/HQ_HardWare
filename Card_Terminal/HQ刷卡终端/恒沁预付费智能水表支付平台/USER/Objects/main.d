@@ -30,4 +30,5 @@
 .\objects\main.o: ..\SYSTEM\inc\Timer_Heart.h
 .\objects\main.o: ..\SYSTEM\inc\systick.h
 .\objects\main.o: ..\HARDWARE\inc\CardInfoDeal.h
+.\objects\main.o: ..\SYSTEM\inc\String_Config.h
 .\objects\main.o: C:\Keil\ARM\ARMCC\Bin\..\include\string.h

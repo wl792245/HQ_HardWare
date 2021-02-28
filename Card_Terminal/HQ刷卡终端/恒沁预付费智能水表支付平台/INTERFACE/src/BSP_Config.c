@@ -7,7 +7,7 @@
  * 时  间   ：2021-01-25
 **********************************************************************************/
 #include "BSP_Config.h"
-
+#include "string.h"
 
 /*******************************************************************************
 * 函 数 名         : BSP_Init
@@ -38,45 +38,53 @@ void BSP_Init(void)
 	FirstHeart_Open(DeviceInfo.TerminalInfo.TerminalId); //第一次握手
 	PC_Start();                        //电脑启动
 	TIM_Heart_Init(9999,7199,1,0);     //心跳定时器时基1s，600秒握手一次
-	//delay_ms(1000);
-	HDMIShowMenuInfo(&DeviceInfo);        //主界面显示
-	HXCardIsInter = 0;                   //刷卡标志位，机器启动完成之前刷卡无效
-	SCCardIsInter = 0;                   //刷卡标志位，机器启动完成之前刷卡无效
-	//M6312_Connecting = 0;
+	HDMIShowMenuInfo(&DeviceInfo);     //主界面显示
+	HXCardIsInter = 0;                 //刷卡标志位，机器启动完成之前刷卡无效
+	SCCardIsInter = 0;                 //刷卡标志位，机器启动完成之前刷卡无效
 }
-
 /*******************************************************************************
-* 函 数 名         : Card_Deal
-* 函数功能		     : 各种卡处理
+* 函 数 名         : Remote_ChangeIp
+* 函数功能		     : 远程更改IP、端口、二维码
 * 输    入         : 无
 * 输    出         : 无
 *******************************************************************************/
-void Card_Deal(void)
+void Remote_ChangeIp(void)
 {
-			//华旭卡处理
-		if(HXCardIsInter == 1)
+	unsigned int Remote_Num[10];
+	char  QRcode[21];
+	Card_Server  Remote_CardChange;
+	M6312_RestartFlag = 0;
+	if (usart1_rcv_len > 0)
+	{
+		String_Clear(TerminalIDServerIP, 100);
+		M6312_USART_GetRcvData(TerminalIDServerIP, usart1_rcv_len);
+		Get_Head(Remote_CardChange.Card_ServerRecHead, TerminalIDServerIP, '%', Remote_Num, 10); //取头
+		if (strcmp(Remote_CardChange.Card_ServerRecHead,"ChangePc")==0) //更改IP
 		{
-			TIM_Cmd(TIM3,DISABLE); //使能或者失能TIMx外设	
-			sec = 0;
-			HXCardIsInter = 0;
-			HDMIShowWait();
-			
+			PC_SendData("HelloMPC%$$");  //电脑重新计时
+			String_Find(QRcode, TerminalIDServerIP, Remote_Num[3]+1, Remote_Num[4]);          //获取二维码
+			if(strlen(QRcode)>10)
+			{
+				String_Find(DeviceInfo.TerminalInfo.QRcode, QRcode, 0, strlen(QRcode));
+				AT24C02_Write(69,DeviceInfo.TerminalInfo.QRcode,21);
+				String_Find(DeviceInfo.ServerInfo.ServerIP, TerminalIDServerIP, Remote_Num[0]+1, Remote_Num[1]);         //获取服务器IP号
+				AT24C02_Write(47,DeviceInfo.ServerInfo.ServerIP,15);
+				String_Find(DeviceInfo.ServerInfo.ServerPort, TerminalIDServerIP, Remote_Num[1]+1, Remote_Num[2]);        //获取服务器端口号
+				AT24C02_Write(63,DeviceInfo.ServerInfo.ServerPort,5);
+				String_Find(DeviceInfo.TerminalInfo.TerminalId, TerminalIDServerIP, Remote_Num[2]+1, Remote_Num[3]);        //获取机器号
+				AT24C02_Write(5,DeviceInfo.TerminalInfo.TerminalId,10);
+				HDMIShowInfo("IP二维码更改成功");
+				PC_StartPam("IP二维码更改成功");
+				M6312_RestartFlag = 0x63;
+			}
+			else
+			{
+				HDMIShowInfo("二维码更改失败,请重试");
+				PC_StartPam("二维码更改失败,请重试");
+			}
 		}
-		//三川卡处理
-		if(SCCardIsInter == 1)
-		{
-			TIM_Cmd(TIM3,DISABLE); //使能或者失能TIMx外设
-			sec = 0;
-			SCCardIsInter = 0;
-			HDMIShowWait();
-			SCCard_Deal();
-			TIM_Cmd(TIM3,ENABLE); //使能或者失能TIMx外设
-		}
-		//新天卡处理
-		//海通卡处理
-		//扬州卡处理
+	}
 }
-
 
 
 /******************** (C) COPYRIGHT 2021 江苏恒沁科技有限公司 ********************/

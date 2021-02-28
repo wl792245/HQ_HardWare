@@ -208,7 +208,7 @@ void Card24_PDeal(Card24_PreInfo *Info24p)
 
     islongthan12 = 0;                  //字符长度超过12
 		netisbreak = 0;                     //判断当前网络线路是否通
-		
+		M6311_RestartFlag = 0;
 		Byte_Split(Card_SendInfo.Card_HexInfo.hexcid, Info24p->cardId, 8); //将4字节卡号拆分成8个半字节数组便于转换成字符
 		HexToChar(Card_SendInfo.Card_CharInfo.strcid, Card_SendInfo.Card_HexInfo.hexcid, 8);//将8个半字节数组卡号转成字符数组
 		Byte_Split(Card_SendInfo.Card_HexInfo.hexaid, Info24p->areacode, 6);//将3字节区域号拆分成6个半字节数组便于转换成字符
@@ -225,8 +225,10 @@ void Card24_PDeal(Card24_PreInfo *Info24p)
 		netisbreak = M6311_UploadData(RecieveServerBuf,UploadServerBuf,"%$$", 3,200);
 		if(netisbreak==0)     //通讯失败
 		{
-			XFS_Fail_Play("24预付费通讯失败，重启中");
-			CPU_Reset();
+			//XFS_Fail_Play("24预付费通讯失败，重启中");
+			//CPU_Reset();
+			M6311_RestartFlag = 0x63;  //
+
 		}
 		else if (netisbreak == 1)                //通讯正常
 		{
@@ -377,7 +379,7 @@ void Card24_LDeal(Card24_LadderInfo *Info24l)
 		
 	islongthan12 = 0;                  //字符长度超过12
   netisbreak = 0;                     //判断当前网络线路是否通
-	
+	M6311_RestartFlag = 0;
 
 	Byte_Split(Card_SendInfo.Card_HexInfo.hexcid, Info24l->cardId, 8); //将4字节卡号拆分成8个半字节数组便于转换成字符
 	HexToChar(Card_SendInfo.Card_CharInfo.strcid, Card_SendInfo.Card_HexInfo.hexcid, 8);//将8个半字节数组卡号转成字符数组
@@ -399,8 +401,9 @@ void Card24_LDeal(Card24_LadderInfo *Info24l)
 	netisbreak = M6311_UploadData(RecieveServerBuf,UploadServerBuf,"%$$", 3,200);
 	if(netisbreak==0)     //通讯失败
 	{
-		XFS_Fail_Play("24阶梯通讯失败，重启中");
-		CPU_Reset();
+		//XFS_Fail_Play("24阶梯通讯失败，重启中");
+		//CPU_Reset();
+		M6311_RestartFlag = 0x63;  //
 	}
 	else                 //通讯正常
 	{
@@ -579,7 +582,8 @@ void Card42_PDeal(Card42_PreInfo *Info42p)
 	
 		islongthan12 = 0;                  //字符长度超过12
 	  netisbreak = 0;                     //判断当前网络线路是否通
-		
+		M6311_RestartFlag = 0;
+	
 		Byte_Split(Card_SendInfo.Card_HexInfo.hexcid, Info42p->cardId, 8); //将4字节卡号拆分成8个半字节数组便于转换成字符
 		HexToChar(Card_SendInfo.Card_CharInfo.strcid, Card_SendInfo.Card_HexInfo.hexcid, 8);//将8个半字节数组卡号转成字符数组
 		Byte_Split(Card_SendInfo.Card_HexInfo.hexaid, Info42p->areacode, 4);//将2字节区域号拆分成4个半字节数组便于转换成字符
@@ -600,8 +604,9 @@ void Card42_PDeal(Card42_PreInfo *Info42p)
 		netisbreak = M6311_UploadData(RecieveServerBuf,UploadServerBuf,"%$$", 3,200);
 		if(netisbreak==0)     //通讯失败
 		{
-			XFS_Fail_Play("42预付费通讯失败，重启中");
-			CPU_Reset();
+			//XFS_Fail_Play("42预付费通讯失败，重启中");
+			//CPU_Reset();
+			M6311_RestartFlag = 0x63;  //
 		}
 		else                 //通讯成功
 		{
@@ -746,7 +751,7 @@ void Card57_PDeal(Card57_PreInfo * Info57p)
 	u8  RecvState = 0;
 	islongthan12 = 0;                  //字符长度超过12
 	netisbreak = 0;                     //判断当前网络线路是否通
-
+  M6311_RestartFlag = 0;
 	Byte_Split(Card_SendInfo.Card_HexInfo.hexcid, Info57p->cardId, 10); //将5字节卡号拆分成10个半字节数组便于转换成字符
 	HexToChar(Card_SendInfo.Card_CharInfo.strcid, Card_SendInfo.Card_HexInfo.hexcid, 10);//将10个半字节数组卡号转成字符数组
 	Byte_Split(Card_SendInfo.Card_HexInfo.hexamount, Info57p->watersalesamount, 4);//将2字节售水量拆分成4个半字节数组便于转换成字符
@@ -767,8 +772,9 @@ void Card57_PDeal(Card57_PreInfo * Info57p)
 	netisbreak = M6311_UploadData(RecieveServerBuf,UploadServerBuf,"%$$", 3,200);
 	if(netisbreak==0)     //通讯不正常
 	{
-		XFS_Fail_Play("57预付费通讯失败，重启中");
-		CPU_Reset();
+		//XFS_Fail_Play("57预付费通讯失败，重启中");
+		//CPU_Reset();
+		M6311_RestartFlag = 0x63;  //
 	}
 	else  //通讯正常
 	{
@@ -929,7 +935,7 @@ void Card57_LDeal(Card57_LadderInfo *Card57l)
 	u8  RecvState = 0;
 	islongthan12 = 0;                  //字符长度超过12
 	netisbreak = 0;                     //判断当前网络线路是否通
-
+  M6311_RestartFlag = 0;
 
 	Byte_Split(Card_SendInfo.Card_HexInfo.hexcid, Card57l->cardId, 10); //将5字节卡号拆分成10个半字节数组便于转换成字符
 	HexToChar(Card_SendInfo.Card_CharInfo.strcid, Card_SendInfo.Card_HexInfo.hexcid, 10);//将10个半字节数组卡号转成字符数组
@@ -953,8 +959,9 @@ void Card57_LDeal(Card57_LadderInfo *Card57l)
 	if(netisbreak==0)  //通讯失败，重启
 	{
 			//M6311_ReConnect(DeviceInfo.ServerInfo.ServerIP, DeviceInfo.ServerInfo.ServerPort, "网络重连中...");  //M6311连接服务器
-		  XFS_Fail_Play("57阶梯通讯失败，重启中");
-			CPU_Reset();
+		  //XFS_Fail_Play("通讯失败，重启中");
+			//CPU_Reset();
+			M6311_RestartFlag = 0x63;  //
 	}
 	else  //通讯正常，重启
 	{
@@ -1132,6 +1139,7 @@ void CacheOrder_update(void)
 	
 	
 	u8  i;
+	M6311_RestartFlag = 0;
 	String_Clear(chead,10);
 	String_Clear(UploadServerBuf,100);
 	Interger_Clear(num,20);
@@ -1165,7 +1173,8 @@ void CacheOrder_update(void)
 			}
 			else
 			{
-				CPU_Reset();
+				//CPU_Reset();
+				M6311_RestartFlag = 0x63;  //
 			}
 		}
 	}

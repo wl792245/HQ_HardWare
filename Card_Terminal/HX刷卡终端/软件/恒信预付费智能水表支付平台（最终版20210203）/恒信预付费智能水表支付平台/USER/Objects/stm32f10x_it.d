@@ -14,6 +14,7 @@
 .\objects\stm32f10x_it.o: ..\FWlib\inc\stm32f10x_tim.h
 .\objects\stm32f10x_it.o: ..\HARDWARE\inc\M6311.h
 .\objects\stm32f10x_it.o: ..\SYSTEM\inc\Usart_M6311.h
+.\objects\stm32f10x_it.o: ..\HARDWARE\inc\AT24C02.h
 .\objects\stm32f10x_it.o: ..\HARDWARE\inc\CardInfoDeal.h
 .\objects\stm32f10x_it.o: ..\SYSTEM\inc\IIC_Card.h
 .\objects\stm32f10x_it.o: ..\HARDWARE\inc\Card42_Config.h
@@ -22,7 +23,6 @@
 .\objects\stm32f10x_it.o: ..\HARDWARE\inc\XFS.h
 .\objects\stm32f10x_it.o: ..\SYSTEM\inc\Uart_XFS.h
 .\objects\stm32f10x_it.o: ..\HARDWARE\inc\HDMI_T050.h
-.\objects\stm32f10x_it.o: ..\HARDWARE\inc\AT24C02.h
 .\objects\stm32f10x_it.o: ..\SYSTEM\inc\Uart_HDMI.h
 .\objects\stm32f10x_it.o: ..\SYSTEM\inc\systick.h
 .\objects\stm32f10x_it.o: ..\SYSTEM\inc\String_Get.h

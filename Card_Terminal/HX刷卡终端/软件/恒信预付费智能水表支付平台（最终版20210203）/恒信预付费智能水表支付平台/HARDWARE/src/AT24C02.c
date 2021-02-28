@@ -9,6 +9,7 @@
 #include "IIC_24C02.h"
 #include "systick.h"
 #include "String_Get.h"
+#include "string.h"
 
 #define AT24C01  127
 #define AT24C02  255
@@ -23,6 +24,8 @@
 #define EE_TYPE  AT24C02
 
 DeviceInit DeviceInfo;
+volatile int Restart_Count = 0;
+char TerminalIDServerIP[100];	                                                           //存放在系统24c02的机器号和服务器ip
 /*******************************************************************************
 * 函 数 名         : AT24C02_Init
 * 函数功能		     : AT24C02初始化   
@@ -150,9 +153,22 @@ u8 AT24C02_Write(u16 WriteAddr,char *pBuffer,u16 NumToWrite)
 *******************************************************************************/
 void AT24C02IPTid_Init(void)
 {
-	u32 num[20] = {0};                                                                       //查找分隔符的个数
-  char TerminalIDServerIP[251];	                                                           //存放在系统24c02的机器号和服务器ip
-	AT24C02_Read(5,TerminalIDServerIP,250);
+	u32 num[10] = {0};                                                                       //查找分隔符的个数
+	char isFirst[3]={'0'};
+	String_Clear(TerminalIDServerIP, 100);
+	AT24C02_Read(98, isFirst, 2);
+	if (strstr(isFirst, FISRT) == NULL)
+	{ 
+		strcpy(TerminalIDServerIP,FTerminalIDServerIP);
+		AT24C02_Write(5,TerminalIDServerIP,strlen(TerminalIDServerIP));
+		strcpy(isFirst, FISRT);
+		AT24C02_Write(98,isFirst,2);
+		ResStart_Write(DeviceInfo.TerminalInfo.ReStart, 0);  //重启次数0
+	}
+	else
+	{
+			AT24C02_Read(5,TerminalIDServerIP,99);
+	}
 	Char_Find(num,TerminalIDServerIP, '%');                                                  //获取百分号的位置
 	String_Find(DeviceInfo.TerminalInfo.TerminalId, TerminalIDServerIP, 0, num[0]);          //获取设备机器号
 	String_Find(DeviceInfo.TerminalInfo.ICCID, TerminalIDServerIP, num[0]+1, num[1]);        //获取设备ICCID
@@ -161,5 +177,40 @@ void AT24C02IPTid_Init(void)
 	String_Find(DeviceInfo.ServerInfo.ServerIP, TerminalIDServerIP, num[3]+1, num[4]);       //获取服务器IP号
 	String_Find(DeviceInfo.ServerInfo.ServerPort, TerminalIDServerIP, num[4]+1, num[5]);     //获取服务器端口号
 	String_Find(DeviceInfo.TerminalInfo.QRcode, TerminalIDServerIP, num[5]+1, num[6]);       //获取设备二维码
+
+}
+/*******************************************************************************
+* 函 数 名         : ResStartM6311
+* 函数功能		     : 记录M6311重启次数
+* 输    入         : ReStartInfo：重启次数转字符存储，value：重启值
+* 输    出         : 无
+*******************************************************************************/
+void ResStart_Write(char *ReStartInfo, int value)//记录重连6311
+{
+	ReStartInfo[0]=value/1000 + '0';
+	ReStartInfo[1]=value%1000/100+'0';
+	ReStartInfo[2]=value%100/10+'0';
+	ReStartInfo[3]=value%10+'0';
+	ReStartInfo[4]='\0';
+	AT24C02_Write(100,ReStartInfo,5);
+}
+/*******************************************************************************
+* 函 数 名         : ReStart_Read
+* 函数功能		     : 
+* 输    入         : ReStartInfo：重启次数转字符存储
+* 输    出         : int :返回读取到的次数整形
+*******************************************************************************/
+int ReStart_Read(char *ReStartInfo)
+{
+	int value = 0;
+	const char* ptr = ReStartInfo;
+	AT24C02_Read(100,ReStartInfo,5);
+	while(*ptr != '\0')
+	{
+		value *= 10;
+    value += *ptr - '0';
+		ptr++;
+	}
+	return value;
 }
 /******************** (C) COPYRIGHT 2021 江苏恒沁科技有限公司 ********************/

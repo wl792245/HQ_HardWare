@@ -16,6 +16,7 @@
 #define PAGE3   "page 3"
 #define PAGE4   "page 4"
 //
+char sysMsg[100];
 /*******************************************************************************
 * 函 数 名         : HDMI_Init
 * 函数功能		     : 液晶屏初始化
@@ -127,8 +128,6 @@ void HDMISendConncetOK(void)
 	HDMI_CMD_Send(PAGE1);
 	HDMIShowSignal(M6311_Signal);
 	HDMI_CMD_Send("t0.txt=\"连接成功！！\"");
-	//信号强度转换函数
-	//NetSignalDisplay(0);
 }
 /*******************************************************************************
 * 函 数 名         : HDMIShowRechargeSucess
@@ -185,17 +184,17 @@ void HDMIShowUserDetail(UserInfoShow UserInfoDisplay)
 	//信号强度
 }
 /*******************************************************************************
-* 函 数 名         : HDMIShowFail
-* 函数功能		     : 液晶屏显示失败原因
-* 输    入         : reason:原因
+* 函 数 名         : HDMIShowInfo
+* 函数功能		     : 液晶屏显示文本
+* 输    入         : txt:文本
 * 输    出         : 无
 *******************************************************************************/
-void HDMIShowInfo(char *reason) 
+void HDMIShowInfo(char *txt) 
 {
 	char reasonstr[50]={'\0'};
 	HDMI_CMD_Send(PAGE1);
 	HDMIShowSignal(M6311_Signal);
-	HDMI_ShowInfo(reasonstr, "t0.txt=\"",reason);
+	HDMI_ShowInfo(reasonstr, "t0.txt=\"",txt);
 }	
 /*******************************************************************************
 * 函 数 名         : HDMIShowWait
@@ -248,13 +247,13 @@ void HDMIShowServerInfo(pDeviceInit deviceinfo)
 * 输    入         : deviceinfo：取二维码信息
 * 输    出         : 无
 *******************************************************************************/
-void HDMIShowMenuInfo(char * QRcode)
+void HDMIShowMenuInfo(const pDeviceInit Menu)
 {
- 	char sysMsg[100];
+ 	
   String_Clear(sysMsg,100);
 	HDMI_CMD_Send(PAGE0);
 	HDMIShowSignal(M6311_Signal);
-	HDMI_ShowInfo(sysMsg, "qr0.txt=\"http://weixin.qq.com/r/",QRcode);//44个元素，对应QRcode[44]//https://u.wechat.com/EEAAXRbIIE0YxMhmj9CmUCU//\"http://weixin.qq.com/r/
+	HDMI_ShowInfo(sysMsg, "qr0.txt=\"http://weixin.qq.com/r/",Menu->TerminalInfo.QRcode);//44个元素，对应QRcode[44]//https://u.wechat.com/EEAAXRbIIE0YxMhmj9CmUCU//\"http://weixin.qq.com/r/
 }
 /*******************************************************************************
 * 函 数 名         : HDMIShowSignal

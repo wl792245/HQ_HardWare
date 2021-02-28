@@ -11,7 +11,7 @@
 
 #include "stm32f10x.h"
 
-#define FISRT "Hx"
+#define FISRT "HQ"
 #define FTerminalIDServerIP "1912W200xx%89860411101850078642%V3.1%V1.9%121.196.181.103%03306%xh2xqWfEYjodrSPK90jU%"      
 
 
@@ -46,6 +46,7 @@ typedef struct Terminal
 	char QRcode[26];				         //二维码
 	char SignalStrength[3];			     //信号强度
 	char Fault[3];			             //故障类型
+	char ReStart[5];                 //网络重连次数
 }TerminalInit;
 
 //服务器信息结构体定义
@@ -63,10 +64,14 @@ typedef struct Device
 }DeviceInit, *pDeviceInit;
 
 extern DeviceInit DeviceInfo;
+extern char TerminalIDServerIP[100];
+extern volatile int Restart_Count;
 
 void AT24C02_Init(void);
 void AT24C02_Read(u16 ReadAddr,char *pBuffer,u16 NumToRead);
 u8 AT24C02_Write(u16 WriteAddr,char *pBuffer,u16 NumToWrite);
 void AT24C02IPTid_Init(void);
+void ResStart_Write(char *ReStartInfo, int value);
+int ReStart_Read(char *ReStartInfo);
 #endif 
 /******************** (C) COPYRIGHT 2021 江苏恒沁科技有限公司 ********************/

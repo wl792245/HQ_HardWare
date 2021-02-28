@@ -30,3 +30,5 @@
 .\objects\bsp_config.o: ..\SYSTEM\inc\Timer_Heart.h
 .\objects\bsp_config.o: ..\SYSTEM\inc\systick.h
 .\objects\bsp_config.o: ..\HARDWARE\inc\CardInfoDeal.h
+.\objects\bsp_config.o: ..\SYSTEM\inc\String_Config.h
+.\objects\bsp_config.o: C:\Keil\ARM\ARMCC\Bin\..\include\string.h

@@ -16,9 +16,10 @@
 #include "utils.h"
 //#include "XFS.h"
 char M6312ConfigMsg[80];  //IP和端口字符组合
-volatile unsigned char M6312_Signal = 10;      //开始默认信号强度
+char M6312_RecieveServerBuf[50];//接收服务器返回的结果 
+ unsigned char M6312_Signal = 10;      //开始默认信号强度
 volatile unsigned char M6312_RestartFlag = 0;      //M6312重启标志位
-volatile unsigned char M6312_Connecting = 1;   //正在连接中
+ unsigned char M6312_Connecting = 1;   //正在连接中
 /*******************************************************************************
 * 函 数 名         : M6312POWER_Init
 * 函数功能		     : M6312电源引脚初始化
@@ -189,8 +190,8 @@ void M6312_Connect(pDeviceInit pServerInfo,char *ShowInfo)
 			}
 			//连接成功
 			//HDMIShowInfo("连接成功");
-			M6312_Signal =M6312_SignalQuery(pServerInfo->TerminalInfo.SignalStrength);  //信号强度检测
-			if (1 == M6312_RestartFlag)
+			M6312_SignalQuery(pServerInfo->TerminalInfo.SignalStrength);  //信号强度检测
+			if (0x63 == M6312_RestartFlag)
 			{
 				continue;
 			}
@@ -286,14 +287,14 @@ void M6312_USART_GetRcvData(char *buf, uint32_t rcv_len)
 /*******************************************************************************
 * 函 数 名         : M6312_SignalQuery
 * 函数功能		     : 查询信号强度
-* 输    入         : 无
+* 输    入         : Signal:信号强度值
 * 输    出         : 无
 *******************************************************************************/
-unsigned char M6312_SignalQuery(char *Signal)
+void M6312_SignalQuery(char *Signal)
 {
 	u8 i,j,k;
-  unsigned char SignalValue;
-	char RecieveServerBuf[50];//接收服务器返回的结果 
+
+
 	k = 0;
 	M6312_RestartFlag = 0;
 	while(k<3)
@@ -305,61 +306,57 @@ unsigned char M6312_SignalQuery(char *Signal)
 		{
 			break;
 		}
+	}
+	if(k >= 3)
+	{
+		M6312_RestartFlag = 0x63;
+	}
+	else
+	{
+		String_Clear(M6312_RecieveServerBuf, 50);
+		M6312_USART_GetRcvData(M6312_RecieveServerBuf, usart1_rcv_len);
+		i=0;
+		while (M6312_RecieveServerBuf[i]!=':') 
+		{
+			i++; 
+		}
+		i++;
+		while (M6312_RecieveServerBuf[i]!=' ')
+		{
+			i++; 
+		}
+		j=0;
+		i++;
+		while (M6312_RecieveServerBuf[i]!=',') 
+		{						
+			Signal[j]=M6312_RecieveServerBuf[i];//取信号强度
+			i++;j++;
+		}
+		Signal[i]='\0';
+		//时间查询
+		if(1 == M6312_TimeQuery(&DeviceInfo.DataInfo))
+		{
+			M6312_RestartFlag = 0x63;
+		}
+		if(USART_M6312_SendCmd("ATO\r\n","OK",1000)==1)// 回到数据连接模式
+		{
+			StrToDec(&M6312_Signal,Signal);
+		}
 		else
 		{
-			if(k>=3)
-			{
-				//CPU_Reset();//重启2G模块标志位
-				M6312_RestartFlag = 1;
-				return 0;
-			}
+			M6312_RestartFlag = 0x63;
 		}
 	}
-	String_Clear(RecieveServerBuf, 50);
-	M6312_USART_GetRcvData(RecieveServerBuf, usart1_rcv_len);
-	i=0;
-	while (RecieveServerBuf[i]!=':') 
-	{
-		i++; 
-	}
-	i++;
-	while (RecieveServerBuf[i]!=' ')
-	{
-		i++; 
-	}
-	j=0;
-	i++;
-  while (RecieveServerBuf[i]!=',') 
-	{						
-		Signal[j]=RecieveServerBuf[i];//取信号强度
-		i++;j++;
-	}
-	Signal[i]='\0';
-	//时间查询
-	M6312_RestartFlag = M6312_TimeQuery(&DeviceInfo.DataInfo);
-	if(1 == M6312_RestartFlag)
-	{
-		return 0;
-	}
-	
-	if(USART_M6312_SendCmd("ATO\r\n","OK",1000)==0)// 回到数据连接模式
-	{
-		M6312_RestartFlag = 1;
-		return 0;
-	}
-	StrToDec(&SignalValue,Signal);
-	return SignalValue;
 }
 /*******************************************************************************
 * 函 数 名         : M6312_TimeQuery
 * 函数功能		     : 时间检测
 * 输    入         : TimeInit：时间指针结构体
-* 输    出         : 0：读取失败， 1：读取成功
+* 输    出         : 1：读取失败， 0：读取成功
 *******************************************************************************/
 unsigned char M6312_TimeQuery(PDataInit TimeInit)
 {
 	u8 i,j,k;
-	char RecieveServerBuf[50];//接收服务器返回的结果 
 	k = 0;
 	M6312_RestartFlag = 0;
 	while(k<3)
@@ -369,63 +366,61 @@ unsigned char M6312_TimeQuery(PDataInit TimeInit)
 		{
 			break;
 		}
-		else
+	}
+	if (k >= 3)
+	{
+		return 1;
+	}
+	else
+	{
+		String_Clear(M6312_RecieveServerBuf, 50);
+		M6312_USART_GetRcvData(M6312_RecieveServerBuf, usart1_rcv_len);
+		i=0;
+		while (M6312_RecieveServerBuf[i]!='"')
 		{
-			if(k>=3)
-			{
-				//CPU_Reset();//重启2G模块标志位
-				M6312_RestartFlag = 1;
-				return M6312_RestartFlag;
-			}
+			i++; 
 		}
+		j=0;
+		for(i++;i<strlen(M6312_RecieveServerBuf);i++)//
+		{
+			if(M6312_RecieveServerBuf[i]=='/') break;
+			TimeInit->Year[j]=M6312_RecieveServerBuf[i];
+			j++;
+		}
+		TimeInit->Year[j]='\0';
+		j=0;
+		for(i++;i<strlen(M6312_RecieveServerBuf);i++)//
+		{
+			if(M6312_RecieveServerBuf[i]=='/') break;
+			TimeInit->Mounth[j]=M6312_RecieveServerBuf[i];
+			j++;
+		}
+		TimeInit->Mounth[j]='\0';
+		j=0;
+		for(i++;i<strlen(M6312_RecieveServerBuf);i++)//
+		{
+			if(M6312_RecieveServerBuf[i]==',') break;
+			TimeInit->Day[j]=M6312_RecieveServerBuf[i];
+			j++;
+		}
+		TimeInit->Day[j]='\0';
+		j=0;
+		for(i++;i<strlen(M6312_RecieveServerBuf);i++)//
+		{
+			if(M6312_RecieveServerBuf[i]==':') break;
+			TimeInit->Hour[j]=M6312_RecieveServerBuf[i];
+			j++;
+		}
+		TimeInit->Hour[j]='\0';
+		j=0;
+		for(i++;i<strlen(M6312_RecieveServerBuf);i++)//
+		{
+			if(M6312_RecieveServerBuf[i]==':') break;
+			TimeInit->Minute[j]=M6312_RecieveServerBuf[i];
+			j++;
+		}
+		TimeInit->Minute[j]='\0';
+		return 0;
 	}
-	String_Clear(RecieveServerBuf, 50);
-	M6312_USART_GetRcvData(RecieveServerBuf, usart1_rcv_len);
-	i=0;
-	while (RecieveServerBuf[i]!='"')
-	{
-		i++; 
-	}
-	j=0;
-	for(i++;i<strlen(RecieveServerBuf);i++)//
-	{
-		if(RecieveServerBuf[i]=='/') break;
-		TimeInit->Year[j]=RecieveServerBuf[i];
-		j++;
-	}
-	TimeInit->Year[j]='\0';
-	j=0;
-	for(i++;i<strlen(RecieveServerBuf);i++)//
-	{
-		if(RecieveServerBuf[i]=='/') break;
-		TimeInit->Mounth[j]=RecieveServerBuf[i];
-		j++;
-	}
-	TimeInit->Mounth[j]='\0';
-	j=0;
-	for(i++;i<strlen(RecieveServerBuf);i++)//
-	{
-		if(RecieveServerBuf[i]==',') break;
-		TimeInit->Day[j]=RecieveServerBuf[i];
-		j++;
-	}
-	TimeInit->Day[j]='\0';
-	j=0;
-	for(i++;i<strlen(RecieveServerBuf);i++)//
-	{
-		if(RecieveServerBuf[i]==':') break;
-		TimeInit->Hour[j]=RecieveServerBuf[i];
-		j++;
-	}
-	TimeInit->Hour[j]='\0';
-	j=0;
-	for(i++;i<strlen(RecieveServerBuf);i++)//
-	{
-		if(RecieveServerBuf[i]==':') break;
-		TimeInit->Minute[j]=RecieveServerBuf[i];
-		j++;
-	}
-	TimeInit->Minute[j]='\0';
-	return M6312_RestartFlag;
 }
 /******************** (C) COPYRIGHT 2021 江苏恒沁科技有限公司 ********************/

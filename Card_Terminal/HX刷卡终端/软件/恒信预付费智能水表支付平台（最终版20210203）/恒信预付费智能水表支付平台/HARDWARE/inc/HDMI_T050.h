@@ -53,13 +53,13 @@ void NetSignalDisplay(u8 SignalValue);
 void HDMISendConncetOK(void);
 void HDMIShowRechargeSucess(char *RechargeSucessValue,int Unit);
 void HDMIShowUserDetail(UserInfoShow UserInfoDisplay);
-void HDMIShowInfo(char *reason);
+void HDMIShowInfo(char *txt);
 void HDMIShowWait(void);
 void HDMIShowWaitEnd(void);
 void HDMIShowChangeSuccess(void);
 void HDMIShowSignal(unsigned char SignalValue);
 void HDMIShowServerInfo(pDeviceInit deviceinfo);
 void HardWareErr(void);
-void HDMIShowMenuInfo(char * QRcode);
+void HDMIShowMenuInfo(const pDeviceInit Menu);
 #endif
 /******************** (C) COPYRIGHT 2021 江苏恒沁科技有限公司 ********************/

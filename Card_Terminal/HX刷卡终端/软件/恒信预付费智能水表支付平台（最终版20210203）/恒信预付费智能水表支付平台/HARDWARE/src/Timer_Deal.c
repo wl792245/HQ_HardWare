@@ -42,9 +42,10 @@ void FirstHeart_Open(char *TerminalId)
 	strcat(TimeSendBuf,"%$$");
 	
   strcpy(UploadTimerBuf, TimeSendBuf);
-	
+	M6311_Connecting = 1;
 	Sendtimes = 0;
 	netisbreak =0;
+	M6311_RestartFlag = 0;
 	while (Sendtimes < 3)
 	{
 			delay_ms(100);
@@ -71,11 +72,12 @@ void FirstHeart_Open(char *TerminalId)
 	}
 	if(netisbreak == 1)
 	{
+		M6311_Connecting = 0;  //网络连接、握手成功
 		M6311_SendData("HeartOK", strlen("HeartOK"));
 	}
 	else
 	{
-		CPU_Reset();
+		M6311_RestartFlag = 0x63;
 	}
 
 }
@@ -92,13 +94,20 @@ void TIM_Heart_Deal(void)
 	u8 netisbreak;
 	String_Clear(TimeSendBuf, 50);
 	String_Clear(UploadTimerBuf, 50);
+	ReStart_Read(DeviceInfo.TerminalInfo.ReStart); //获取重启次数
+	M6311_SignalQuery(DeviceInfo.TerminalInfo.SignalStrength);
 	strcpy(TimeSendBuf,"TSendheart%");
 	strcat(TimeSendBuf,DeviceInfo.TerminalInfo.TerminalId);
-	strcat(TimeSendBuf,"v5");
+	strcat(TimeSendBuf,"%");
+	strcat(TimeSendBuf,"v6");
 	strcat(TimeSendBuf,"%$$");
+	strcat(TimeSendBuf,DeviceInfo.TerminalInfo.ReStart);
+	strcat(TimeSendBuf,"/");
+	strcat(TimeSendBuf,DeviceInfo.TerminalInfo.SignalStrength);
 	strcpy(UploadTimerBuf, TimeSendBuf);
 	Sendtimes = 0;
 	netisbreak = 0;
+	M6311_RestartFlag = 0;
 	while (Sendtimes < 3)
 	{
 			M6311_SendData(UploadTimerBuf, strlen(UploadTimerBuf));
@@ -128,10 +137,8 @@ void TIM_Heart_Deal(void)
 	}
 	else
 	{
-		XFS_Fail_Play("定时器握手失败，请等候");
-		CPU_Reset();
+		M6311_RestartFlag = 0x63;  
 	}
-  CacheOrder_update();
 }
 
 

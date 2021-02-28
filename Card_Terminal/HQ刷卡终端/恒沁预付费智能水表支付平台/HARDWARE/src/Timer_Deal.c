@@ -44,6 +44,7 @@ void FirstHeart_Open(char *TerminalId)
 	M6312_Connecting = 1;
 	Sendtimes = 0;
 	netisbreak =0;
+	M6312_RestartFlag = 0;
 	while (Sendtimes < 3)
 	{
 			delay_ms(100);
@@ -70,14 +71,12 @@ void FirstHeart_Open(char *TerminalId)
 	}
 	if(netisbreak == 1)
 	{
-		//M6312_SendData("HeartOK", strlen("HeartOK"));
 		HDMISendConncetOK();
 		M6312_Connecting = 0;
-		M6312_RestartFlag = 0;
 	}
 	else
 	{
-		M6312_RestartFlag = 1;
+		M6312_RestartFlag = 0x63;
 	}
 
 }
@@ -134,7 +133,7 @@ void TIM_Heart_Deal(void)
 	}
 	else
 	{
-     M6312_RestartFlag = 1;
+     M6312_RestartFlag = 0x63;
 	}
 
 }

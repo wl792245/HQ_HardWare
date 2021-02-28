@@ -108,17 +108,14 @@ int main(void)
 			}
 			else
 			{
-				delay_ms(1000);
 				XFS_HDMI_Play("请重刷");
-				delay_ms(1000);
 			}
 			while(GPIO_ReadInputDataBit(Card_GPIO,Card_ICSW)==0)	//卡物理在线，等待
 			{
 				;
 			}
 			TIM_Cmd(TIM3,ENABLE); //使能或者失能TIMx外设
-			AT24C02IPTid_Init();
-			HDMIShowMenuInfo(DeviceInfo.TerminalInfo.QRcode);
+			HDMIShowMenuInfo(&DeviceInfo);
 		}
 		//57卡处理
 		if (Card57_Flag == 1)
@@ -139,18 +136,14 @@ int main(void)
 			}
 			else
 			{
-				delay_ms(1000);
 				XFS_HDMI_Play("请重刷");
-				delay_ms(1000);
 			}
 		  while(GPIO_ReadInputDataBit(Card57_GPIO,Card57_ICSW)==0)	//卡物理在线，等待
 			{
 				;
 			}
-			
 			TIM_Cmd(TIM3,ENABLE); //使能或者失能TIMx外设
-			AT24C02IPTid_Init();
-			HDMIShowMenuInfo(DeviceInfo.TerminalInfo.QRcode);
+			HDMIShowMenuInfo(&DeviceInfo);
 		}	
     //定时器处理
 		if(TimeIsInter == 1)
@@ -158,11 +151,23 @@ int main(void)
 			TIM_Cmd(TIM3,DISABLE); //使能或者失能TIMx外设
 			TimeIsInter = 0;
 			TIM_Heart_Deal();
-			AT24C02IPTid_Init();		//初始化获取机器号服务器IP
-			M6311_Signal = M6311_SignalQuery(DeviceInfo.TerminalInfo.SignalStrength);
-			HDMIShowMenuInfo(DeviceInfo.TerminalInfo.QRcode);
+			HDMIShowMenuInfo(&DeviceInfo);
 			TIM_Cmd(TIM3,ENABLE); //使能或者失能TIMx外设
-		}			
+		}
+		//重启M6312
+    if (M6311_RestartFlag == 0X63)
+		{
+			TIM_Cmd(TIM3,DISABLE); //使能或者失能TIMx外设
+			M6311_RestartFlag = 0;
+			sec = 0;
+			Restart_Count = ReStart_Read(DeviceInfo.TerminalInfo.ReStart); //获取重启次数
+			Restart_Count +=1;
+			ResStart_Write(DeviceInfo.TerminalInfo.ReStart, Restart_Count);  //写入重启次数
+			M6311_Connect(&DeviceInfo, "网络重连中...");  //M6311连接服务器
+			FirstHeart_Open(DeviceInfo.TerminalInfo.TerminalId);
+			HDMIShowMenuInfo(&DeviceInfo);
+			TIM_Cmd(TIM3,ENABLE); //使能或者失能TIMx外设
+		}
 	}
 }
 

@@ -11,8 +11,6 @@
 #include "HDMI_T050.h"
 #include "systick.h"
 #include "hw_config.h"
-#include "HXCard_Config.h"
-#include "SCCard_Config.h"
 #include "string.h"
 #include "String_Config.h"
 #include "AT24C02.h"
@@ -32,7 +30,7 @@ char RecieveServerBuf[RCVLEN];   //接收服务器返回的结果
 
 //char ServerRecHead[18];                 //服务器取头
 //char ServerRecStr[200];                 //服务器内容
-HXCard4428_Info HXCard4428_RecvInfo;    //华旭4428卡接收消息结构体
+//HXCard4428_Info HXCard4428_RecvInfo;    //华旭4428卡接收消息结构体
 
 #if 1
 /*******************************************************************************
@@ -263,29 +261,21 @@ void SCCard_Deal(void)
 				if (M6312_ReturnValue == 1)
 				{
 					SCCard_ServerDataSpit(&SCCard_ServerInfo, SCCard_PCInfo, SendServerBuf, RecievePCBuf,RecieveServerBuf, SendPCBuf);
-					//delay_ms(1000);
-
-				  return ;
 				}
 				else
 				{
-					M6312_RestartFlag = 1;  //M6312重启
-					return;
+					M6312_RestartFlag = 0x63;  //M6312重启
 				}
 			}
 			else if (PC_SpitValue == 0)
 			{
 					HDMIShowInfo("未知卡,请正确插卡！");
 		     	PC_StartPam("未知卡,请正确插卡！");
-					//HDMIShowMenuInfo(&DeviceInfo);        //主界面显示
-				  return;
 			}
 			else if(PC_SpitValue == 2)
 			{
 				HDMIShowInfo("请先刷表");
 				PC_StartPam("请先刷表");
-				//HDMIShowMenuInfo(&DeviceInfo);        //主界面显示
-				return;
 			}				
 	}
 	//电脑通讯失败
@@ -293,7 +283,7 @@ void SCCard_Deal(void)
 	{
 			HDMIShowInfo("请取卡,3分钟后再插卡");
 		  PC_StartPam("请取卡,3分钟后再插卡");
-		  PC_RestartFlag = 1;   //电脑重启
+		  PC_RestartFlag = 0x86;   //电脑重启
 	}
 }
 /******************** (C) COPYRIGHT 2021 江苏恒沁科技有限公司 ********************/
