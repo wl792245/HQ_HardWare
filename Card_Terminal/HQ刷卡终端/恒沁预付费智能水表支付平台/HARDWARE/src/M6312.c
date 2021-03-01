@@ -195,7 +195,9 @@ void M6312_Connect(pDeviceInit pServerInfo,char *ShowInfo)
 			{
 				continue;
 			}
-
+			Restart_Count = ReStart_Read(DeviceInfo.TerminalInfo.ReStart); //获取重启次数
+			Restart_Count +=1;
+			ResStart_Write(DeviceInfo.TerminalInfo.ReStart, Restart_Count);  //写入重启次数
 			isStartNet = 0;
 			delay_ms(941);
 		}

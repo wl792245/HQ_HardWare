@@ -107,16 +107,16 @@ void USART_M6312_Write(char *Data, uint32_t len)
 *******************************************************************************/
 int  USART_M6312_SendCmd(char* cmd, char* result,  uint32_t timeOut)
 {  
-	int sendattime = 49;
+	int sendattime = 0;
 	int i = 0;
-	int j;
-	while(i<sendattime)
+	while(sendattime < 3)
 	{
 		String_Clear((char *)usart1_rcv_buf, strlen((const char *)usart1_rcv_buf));
 		usart1_rcv_len = 0;
+		sendattime++;
 		USART_M6312_Write(cmd, strlen((const char *)cmd));
 		delay_ms(timeOut);   //等待接收数据结束
-		for(j=0;j<20;j++)			//等待接收数据结束
+		for(i=0;i<20;i++)			//等待接收数据结束
 		{
 			if(usart1_rcv_len>0)
 			{
@@ -129,7 +129,6 @@ int  USART_M6312_SendCmd(char* cmd, char* result,  uint32_t timeOut)
 			}
 			delay_ms(341);
 		}
-		i++;	
   }
 	return 0;
 }

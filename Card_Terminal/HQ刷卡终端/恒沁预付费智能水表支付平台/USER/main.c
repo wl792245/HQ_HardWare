@@ -27,7 +27,9 @@ int main(void)
 		if(SCCardIsInter == 1)
 		{
 			TIM_Cmd(TIM3,DISABLE); //使能或者失能TIMx外设
+			TIM_Cmd(TIM2,DISABLE); //使能或者失能TIMx外设
 			Server_Time = 0;
+			PC_Time = 0;
 			SCCardIsInter = 0;
 			HDMIShowWait();
 			SCCard_Deal();
@@ -36,6 +38,7 @@ int main(void)
 				;
 			}
 			HDMIShowMenuInfo(&DeviceInfo);        //主界面显示
+			TIM_Cmd(TIM2,DISABLE); //使能或者失能TIMx外设
 			TIM_Cmd(TIM3,ENABLE); //使能或者失能TIMx外设
 		}
 		//定时器服务器处理
@@ -52,8 +55,8 @@ int main(void)
 		//电脑重启处理
 		if (PC_RestartFlag == 0x86)
 		{
-			TIM_Cmd(TIM3,DISABLE); //使能或者失能TIMx外设
-			Server_Time = 0;
+			TIM_Cmd(TIM2,DISABLE); //使能或者失能TIMx外设
+			PC_Time = 0;
 			PC_RestartFlag = 0;
 			PC_Close();
 			delay_ms(941);
@@ -62,9 +65,11 @@ int main(void)
 			{
 				delay_ms(941);
 			}
-			PC_Start();                        //电脑启动
-			HDMIShowMenuInfo(&DeviceInfo);        //主界面显示
-			TIM_Cmd(TIM3,ENABLE); //使能或者失能TIMx外设
+			if(PC_Start())
+			{
+				HDMIShowMenuInfo(&DeviceInfo);     //主界面显示
+				TIM_Cmd(TIM2,ENABLE); //使能或者失能TIMx外设
+			}
 		}
 		//M6312重启
 		if (M6312_RestartFlag == 0x63)
@@ -72,9 +77,6 @@ int main(void)
 			TIM_Cmd(TIM3,DISABLE); //使能或者失能TIMx外设
 			Server_Time = 0;
 			M6312_RestartFlag = 0;
-			Restart_Count = ReStart_Read(DeviceInfo.TerminalInfo.ReStart); //获取重启次数
-			Restart_Count +=1;
-			ResStart_Write(DeviceInfo.TerminalInfo.ReStart, Restart_Count);  //写入重启次数
 			M6312_Connect(&DeviceInfo, "网络重连中...");  //M6312连接服务器,信号强度检测，时间读取
 			FirstHeart_Open(DeviceInfo.TerminalInfo.TerminalId); //第一次握手
 			HDMIShowMenuInfo(&DeviceInfo);        //主界面显示

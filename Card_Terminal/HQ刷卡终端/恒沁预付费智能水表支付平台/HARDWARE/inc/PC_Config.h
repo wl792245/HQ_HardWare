@@ -25,7 +25,6 @@ extern volatile unsigned char PC_RestartFlag;
 void PC_Init(u32 Bound, u16 m_irq, u16 s_irq);
 void PC_Close(void);
 void PC_Open(void);
-void PC_Start(void);
 void PC_ShutDown(void);
 void PC_ReadCard(void);
 void PC_WriteCard(const char *psrc, CardType_Info CardTypeInfo);
@@ -38,6 +37,6 @@ u8 PC_ReadData(char * pdest,  const char times,int len);
 u8 PC_WirteData(char * pdest, const char *psrc, const char times,int len, CardType_Info CardTypeInfo);
 void USART_PC_SendData(char * buf,uint32_t len);
 void Result_StartPam(char *RechargeSucessValue,int Unit);
-
+unsigned char  PC_Start(void);
 #endif
 /******************** (C) COPYRIGHT 2021 江苏恒沁科技有限公司 ********************/

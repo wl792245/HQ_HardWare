@@ -171,6 +171,9 @@ void M6311_Connect(const pDeviceInit pServerInfo, char *ShowInfo)
 			{
 				continue;
 			}
+			Restart_Count = ReStart_Read(DeviceInfo.TerminalInfo.ReStart); //获取重启次数
+			Restart_Count +=1;
+			ResStart_Write(DeviceInfo.TerminalInfo.ReStart, Restart_Count);  //写入重启次数
 			isStartNet = 0;
 			HDMISendConncetOK();
 			delay_ms(941);
@@ -256,7 +259,7 @@ void M6311_SignalQuery(char *Signal)
 	while(k<3)
 	{
 		k++;
-		if(USART_M6311_SendCmd("+++","OK",1000)==1)//查询信号强度
+		if(USART_M6311_SendCmd("+++","OK",842)==1)//查询信号强度
 		{
 			break;
 		}
@@ -271,7 +274,7 @@ void M6311_SignalQuery(char *Signal)
 		while (k<3)
 		{
 			k++;
-			if(USART_M6311_SendCmd("AT+CSQ\r\n","CSQ",1000)==1)//查询信号强度
+			if(USART_M6311_SendCmd("AT+CSQ\r\n","CSQ",842)==1)//查询信号强度
 			{
 				break;
 			}
@@ -302,7 +305,7 @@ void M6311_SignalQuery(char *Signal)
 				i++;j++;
 			}
 			Signal[i]='\0';
-			if(USART_M6311_SendCmd("ATO\r\n","OK",1000)==1)// 回到数据连接模式
+			if(USART_M6311_SendCmd("ATO\r\n","OK",842)==1)// 回到数据连接模式
 			{
 				StrToDec(&M6311_Signal,Signal);	
 			}

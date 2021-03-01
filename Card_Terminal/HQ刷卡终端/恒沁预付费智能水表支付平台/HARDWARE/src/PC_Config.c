@@ -326,9 +326,9 @@ void Result_StartPam(char *RechargeSucessValue,int Unit)
 * 函 数 名         : PC_Start
 * 函数功能		     : 使用USB或者串口模式与电脑通讯判断是否启动
 * 输    入         : 无
-* 输    出         : 无
+* 输    出         : 1：返回电脑连接成功  0：返回电脑连接失败
 *******************************************************************************/
-void PC_Start(void)
+unsigned char  PC_Start(void)
 {
 	char i;
 	u8 pcisbreak, Sendtimes;
@@ -341,7 +341,7 @@ void PC_Start(void)
 	HDMIShowInfo("微电脑连接中，请稍等…");
 	//等电脑启动完，可以换成接收启动成功之后发送字符来判断
 	delay_ms(941);
-	while (Sendtimes < 3)
+	while (Sendtimes < 5)
 	{
 		delay_ms(100);
 		PC_SendData("Hello%$$");
@@ -353,7 +353,6 @@ void PC_Start(void)
 				delay_ms(341);
 				if ((NULL != strstr((const char *)usart2_rcv_buf, (const char *)"Too"))||(NULL != strstr((const char *)USB_USART_RX_BUF, (const char *)"Too")))
 				{
-					delay_ms(100);
 					break;
 				}				
 			}
@@ -368,14 +367,14 @@ void PC_Start(void)
 	if(pcisbreak == 1)
 	{
 		PC_Connecting = 0;
-		PC_RestartFlag = 0;
 		HDMIShowInfo("电脑连接成功");
+		return 1;
 	}
 	else
 	{
-		PC_Connecting = 1;
 		HDMIShowInfo("电脑重启中…");
-		PC_RestartFlag = 1;  //电脑重启标志位
+		PC_RestartFlag = 0x86;  //电脑重启标志位
+		return 0;
 	}
 }
 

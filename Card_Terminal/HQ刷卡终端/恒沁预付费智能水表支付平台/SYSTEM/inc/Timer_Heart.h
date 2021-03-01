@@ -12,8 +12,8 @@
 
 
 
-void TIM_Heart_Init(u16 arr,u16 psc,u16 m_irq, u16 s_irq);
-
+void TIM3_Heart_Init(u16 arr,u16 psc,u16 m_irq, u16 s_irq);
+void TIM2_Heart_Init(u16 arr,u16 psc,u16 m_irq, u16 s_irq);
 
 #endif
 /******************** (C) COPYRIGHT 2021 江苏恒沁科技有限公司 ********************/

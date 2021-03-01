@@ -110,6 +110,7 @@ void TIM_Heart_Deal(void)
 	M6311_RestartFlag = 0;
 	while (Sendtimes < 3)
 	{
+		  
 			M6311_SendData(UploadTimerBuf, strlen(UploadTimerBuf));
 		  Sendtimes++;
 			for (i=0; i<20; i++)  //等待返回数据
@@ -119,7 +120,6 @@ void TIM_Heart_Deal(void)
 					delay_ms(341);
 					if (NULL != strstr((const char *)usart2_rcv_buf, (const char *)"K"))
 					{
-						delay_ms(100);
 						break;
 					}
 				}
@@ -137,7 +137,8 @@ void TIM_Heart_Deal(void)
 	}
 	else
 	{
-		M6311_RestartFlag = 0x63;  
+		M6311_RestartFlag = 0x63;
+
 	}
 }
 

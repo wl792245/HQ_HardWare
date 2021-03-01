@@ -155,14 +155,11 @@ int main(void)
 			TIM_Cmd(TIM3,ENABLE); //使能或者失能TIMx外设
 		}
 		//重启M6312
-    if (M6311_RestartFlag == 0X63)
+    if (M6311_RestartFlag == 0x63)
 		{
 			TIM_Cmd(TIM3,DISABLE); //使能或者失能TIMx外设
 			M6311_RestartFlag = 0;
 			sec = 0;
-			Restart_Count = ReStart_Read(DeviceInfo.TerminalInfo.ReStart); //获取重启次数
-			Restart_Count +=1;
-			ResStart_Write(DeviceInfo.TerminalInfo.ReStart, Restart_Count);  //写入重启次数
 			M6311_Connect(&DeviceInfo, "网络重连中...");  //M6311连接服务器
 			FirstHeart_Open(DeviceInfo.TerminalInfo.TerminalId);
 			HDMIShowMenuInfo(&DeviceInfo);

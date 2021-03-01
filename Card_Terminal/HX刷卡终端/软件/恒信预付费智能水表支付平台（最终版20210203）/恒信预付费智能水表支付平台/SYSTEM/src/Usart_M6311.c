@@ -82,29 +82,27 @@ int  USART_M6311_SendCmd(char* cmd, char* result,  uint32_t timeOut)
 {  
 	int sendattime;
 	int i = 0;
-	int j;
-	sendattime=49;//50->5,20181022
-	while(i<sendattime)
+	sendattime=0;//50->5,20181022
+	while(sendattime<3)
 	{
 		String_Clear((char *)usart2_rcv_buf, strlen((const char *)usart2_rcv_buf));
 		usart2_rcv_len = 0;
+		sendattime++;
 		USART_M6311_Write(cmd, strlen((const char *)cmd));
 		delay_ms(timeOut);   //等待接收数据结束
-		for(j=0;j<20;j++)			//等待接收数据结束
+		for(i=0;i<20;i++)			//等待接收数据结束
 		{
 			if(usart2_rcv_len>0)
 			{
 				delay_ms(941);
 				if((NULL != strstr((const char *)usart2_rcv_buf, (const char *)result)))
 				{
-						delay_ms(200);
 						return 1;
 				}
 				usart2_rcv_len = 0;
 			}
 			delay_ms(341);
 		}
-		i++;	//因为下面有continue语句，则把此语句提到此20181022
   }
 	return 0;
 }

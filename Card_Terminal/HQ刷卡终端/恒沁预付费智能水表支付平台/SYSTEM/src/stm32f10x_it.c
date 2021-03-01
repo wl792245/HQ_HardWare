@@ -159,11 +159,11 @@ void USART_PC_IRQHandler(void)
 }
 /*******************************************************************************
 * 函 数 名         : TIM3_IRQHandler
-* 函数功能		     : 进行握手测试
+* 函数功能		     : 进行服务器握手测试
 * 输    入         : 无
 * 输    出         : 无
 *******************************************************************************/
-void TIM3_IRQHandler()   
+void TIM3_IRQHandler(void)   
 {
 	TIM_Cmd(TIM3,DISABLE); //使能或者失能TIMx外设
 	if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)	//检查是否发生中断	
@@ -171,20 +171,34 @@ void TIM3_IRQHandler()
 		TIM_ClearITPendingBit(TIM3, TIM_IT_Update  );	//清除中断标志
 	}
 	Server_Time++;
-	PC_Time++;
 	if(Server_Time >= 600)  //10分钟与服务器握手一次
 	{
 		Server_Time=0;
 		Server_TimeIsInter = 1;
 	}
-	if(PC_Time>= 120)      //2分钟与电脑握手一次
+	TIM_Cmd(TIM3,ENABLE); //使能或者失能TIMx外设	
+}
+/*******************************************************************************
+* 函 数 名         : TIM2_IRQHandler
+* 函数功能		     : 进行电脑握手测试
+* 输    入         : 无
+* 输    出         : 无
+*******************************************************************************/
+void TIM2_IRQHandler(void)
+{
+	TIM_Cmd(TIM2,DISABLE); //使能或者失能TIMx外设
+	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)	//检查是否发生中断	
+	{
+		TIM_ClearITPendingBit(TIM2, TIM_IT_Update  );	//清除中断标志
+	}
+	PC_Time++;
+	if(PC_Time>= 60)      //2分钟与电脑握手一次
 	{
 		PC_Time = 0;
 		PC_TimeIsInter = 1;
 	}
-	TIM_Cmd(TIM3,ENABLE); //使能或者失能TIMx外设	
-}
-
+	TIM_Cmd(TIM2,ENABLE); //使能或者失能TIMx外设	
+}	
 
 void NMI_Handler(void)
 {

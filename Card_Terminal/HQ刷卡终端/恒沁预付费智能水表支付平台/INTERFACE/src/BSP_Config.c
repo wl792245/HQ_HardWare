@@ -36,11 +36,15 @@ void BSP_Init(void)
 	AT24C02IPTid_Init();               //初始化获取机器号、服务器IPPORT
   M6312_Connect(&DeviceInfo, "网络连接中...");  //M6312连接服务器,信号强度检测，时间读取
 	FirstHeart_Open(DeviceInfo.TerminalInfo.TerminalId); //第一次握手
-	PC_Start();                        //电脑启动
-	TIM_Heart_Init(9999,7199,1,0);     //心跳定时器时基1s，600秒握手一次
-	HDMIShowMenuInfo(&DeviceInfo);     //主界面显示
+	if (PC_Start())
+	{
+			TIM3_Heart_Init(9999,7199,1,0);    //TIM3,服务器握手，心跳定时器时基1s，10分钟600秒握手一次
+			TIM2_Heart_Init(19999,7199,1,1);   //TIM2,电脑握手，心跳定时器时基2s，2分钟120秒握手一次
+			HDMIShowMenuInfo(&DeviceInfo);     //主界面显示
+	}
 	HXCardIsInter = 0;                 //刷卡标志位，机器启动完成之前刷卡无效
 	SCCardIsInter = 0;                 //刷卡标志位，机器启动完成之前刷卡无效
+
 }
 /*******************************************************************************
 * 函 数 名         : Remote_ChangeIp
@@ -51,7 +55,6 @@ void BSP_Init(void)
 void Remote_ChangeIp(void)
 {
 	unsigned int Remote_Num[10];
-	char  QRcode[21];
 	Card_Server  Remote_CardChange;
 	M6312_RestartFlag = 0;
 	if (usart1_rcv_len > 0)
@@ -62,10 +65,9 @@ void Remote_ChangeIp(void)
 		if (strcmp(Remote_CardChange.Card_ServerRecHead,"ChangePc")==0) //更改IP
 		{
 			PC_SendData("HelloMPC%$$");  //电脑重新计时
-			String_Find(QRcode, TerminalIDServerIP, Remote_Num[3]+1, Remote_Num[4]);          //获取二维码
-			if(strlen(QRcode)>10)
+			String_Find(DeviceInfo.TerminalInfo.QRcode, TerminalIDServerIP, Remote_Num[3]+1, Remote_Num[4]);          //获取二维码
+			if(strlen(DeviceInfo.TerminalInfo.QRcode)>10)
 			{
-				String_Find(DeviceInfo.TerminalInfo.QRcode, QRcode, 0, strlen(QRcode));
 				AT24C02_Write(69,DeviceInfo.TerminalInfo.QRcode,21);
 				String_Find(DeviceInfo.ServerInfo.ServerIP, TerminalIDServerIP, Remote_Num[0]+1, Remote_Num[1]);         //获取服务器IP号
 				AT24C02_Write(47,DeviceInfo.ServerInfo.ServerIP,15);
