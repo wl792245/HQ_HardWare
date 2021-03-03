@@ -1,0 +1,53 @@
+Q：git上传文件出错[rejected] master -> master (fetch first) error: failed to push some refs to '
+A：因为github中的README.md文件不在本地代码目录中，可以通过如下命令进行代码合并
+
+git pull --rebase origin master
+
+git push origin master
+
+
+Q：GIThub操作流程
+A：
+
+1.git clone 不指定分支
+
+ git clone  http://10.1.1.11/service/tmall-service.git
+2.git clone 指定分支
+
+ git clone -b dev_jk http://10.1.1.11/service/tmall-service.git
+查看电脑B本地仓库的分支
+git branch
+
+首先，先来看看上面描述的情况，电脑B查看本地的所有分支，如下：
+
+$ git branch
+* master
+可以看到clone下来的远程仓库并不会将所有分支都clone下来。
+
+查看本地和远程仓库的所有分支
+git branch -a
+
+上面看了本地仓库只有master分支，那么怎么查看本地和远程仓库的所有分支呢？如下：
+
+
+从这里已经可以知道远程有哪些分支可以提供本地去同步了。那么如果单独查看远程的分支呢？
+
+查看远程仓库的分支
+git branch -r
+
+单独直接查看远程仓库的所有分支如下：
+
+
+其实用起来还没有直接 git branch -a 查看所有来得清晰。下一步看看如何同步远程分支。
+
+同步远程分支
+git fetch 将本地分支与远程保持同步
+git checkout -b 本地分支名x origin/远程分支名x 拉取远程分支并同时创建对应的本地分支
+首先同步所有远程分支，如下：
+git branch -r | grep -v '\->' | while read remote; do git branch --track "${remote#origin/}" "$remote"; done
+
+
+将本地所有分支与远程保持同步 git fetch --all
+
+最后拉取所有分支代码 git pull --all
+
